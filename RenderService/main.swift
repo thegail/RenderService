@@ -10,7 +10,7 @@ import Foundation
 let configuration = RenderConfiguration(width: 100, height: 100, maxBounces: 3)
 let renderer = try Renderer(device: RenderDevice(), config: configuration)
 
-for _ in 1...2000 {
+for _ in 1...6000 {
 	try renderer.draw()
 }
 
