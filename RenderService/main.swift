@@ -7,5 +7,6 @@
 
 import Foundation
 
-print("Hello, World!")
-
+let configuration = RenderConfiguration(width: 100, height: 100)
+let renderer = try Renderer(device: RenderDevice(), config: configuration)
+try renderer.draw()
