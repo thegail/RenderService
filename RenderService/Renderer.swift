@@ -24,7 +24,7 @@ class Renderer {
 	}
 	
 	func draw() throws {
-		let commandBuffer = try device.makeCommandBuffer()
+		let commandBuffer = try self.device.makeCommandBuffer()
 		guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
 			throw RenderError.commandEncoder
 		}
@@ -44,5 +44,33 @@ class Renderer {
 		
 		commandBuffer.commit()
 		commandBuffer.waitUntilCompleted()
+	}
+	
+	func export() throws -> Data {
+		let texture = try self.device.makeInspectionTexture(width: self.config.width, height: self.config.height)
+		let commandBuffer = try self.device.makeCommandBuffer()
+		guard let encoder = commandBuffer.makeBlitCommandEncoder() else {
+			throw RenderError.blitEncoder
+		}
+		
+		encoder.copy(from: self.targetTexture, to: texture)
+		encoder.endEncoding()
+		commandBuffer.commit()
+		commandBuffer.waitUntilCompleted()
+		
+		let bytesPerRow = self.config.width * 4
+		let imageSize = bytesPerRow * self.config.height
+		var data = Array<UInt8>(repeating: 0, count: imageSize)
+		texture.getBytes(
+			&data,
+			bytesPerRow: bytesPerRow,
+			from: MTLRegion(
+				origin: MTLOrigin(x: 0, y: 0, z: 0),
+				size: MTLSize(width: self.config.width, height: self.config.height, depth: 1)
+			),
+			mipmapLevel: 0
+		)
+		
+		return Data(data)
 	}
 }

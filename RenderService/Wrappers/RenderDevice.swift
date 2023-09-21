@@ -85,6 +85,21 @@ class RenderDevice {
 		return texture
 	}
 	
+	func makeInspectionTexture(width: Int, height: Int) throws -> MTLTexture {
+		let descriptor = MTLTextureDescriptor()
+		descriptor.width = width
+		descriptor.height = height
+		descriptor.usage = [.shaderWrite]
+		descriptor.storageMode = .shared
+		descriptor.pixelFormat = .bgra8Unorm
+		
+		guard let texture = self.inner.makeTexture(descriptor: descriptor) else {
+			throw RenderError.inspectionTexture
+		}
+		
+		return texture
+	}
+	
 	func makeUniformsBuffer(data: Uniforms) throws -> MTLBuffer {
 		var data = data
 		let buffer = self.inner.makeBuffer(
