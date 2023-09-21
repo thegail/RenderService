@@ -17,6 +17,8 @@
 		32997E452ABBFBC200F5BDD3 /* ImageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E442ABBFBC200F5BDD3 /* ImageExporter.swift */; };
 		32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E482ABC012D00F5BDD3 /* ExportError.swift */; };
 		32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E4D2ABC07BA00F5BDD3 /* Cube.swift */; };
+		32997E502ABCA17600F5BDD3 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E4F2ABCA17600F5BDD3 /* Triangle.swift */; };
+		32997E522ABCA3E100F5BDD3 /* generateTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,8 @@
 		32997E442ABBFBC200F5BDD3 /* ImageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExporter.swift; sourceTree = "<group>"; };
 		32997E482ABC012D00F5BDD3 /* ExportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportError.swift; sourceTree = "<group>"; };
 		32997E4D2ABC07BA00F5BDD3 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		32997E4F2ABCA17600F5BDD3 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generateTestScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				32997E4D2ABC07BA00F5BDD3 /* Cube.swift */,
+				32997E4F2ABCA17600F5BDD3 /* Triangle.swift */,
+				32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */,
 			);
 			path = Geometry;
 			sourceTree = "<group>";
@@ -182,10 +188,12 @@
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
 				32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */,
+				32997E522ABCA3E100F5BDD3 /* generateTestScene.swift in Sources */,
 				32997E452ABBFBC200F5BDD3 /* ImageExporter.swift in Sources */,
 				32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */,
 				32997E362ABB8C9D00F5BDD3 /* RenderError.swift in Sources */,
 				32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */,
+				32997E502ABCA17600F5BDD3 /* Triangle.swift in Sources */,
 				32997E432ABBF73D00F5BDD3 /* render.metal in Sources */,
 				32997E3F2ABBF42700F5BDD3 /* Uniforms.swift in Sources */,
 				32997E2B2ABB8B4E00F5BDD3 /* main.swift in Sources */,
