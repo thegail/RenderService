@@ -14,6 +14,8 @@
 		32997E3F2ABBF42700F5BDD3 /* Uniforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E3E2ABBF42700F5BDD3 /* Uniforms.swift */; };
 		32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */; };
 		32997E432ABBF73D00F5BDD3 /* render.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E422ABBF73D00F5BDD3 /* render.metal */; };
+		32997E452ABBFBC200F5BDD3 /* ImageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E442ABBFBC200F5BDD3 /* ImageExporter.swift */; };
+		32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E482ABC012D00F5BDD3 /* ExportError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +39,8 @@
 		32997E3E2ABBF42700F5BDD3 /* Uniforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uniforms.swift; sourceTree = "<group>"; };
 		32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderConfiguration.swift; sourceTree = "<group>"; };
 		32997E422ABBF73D00F5BDD3 /* render.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = render.metal; sourceTree = "<group>"; };
+		32997E442ABBFBC200F5BDD3 /* ImageExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExporter.swift; sourceTree = "<group>"; };
+		32997E482ABC012D00F5BDD3 /* ExportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 				32997E352ABB8C9D00F5BDD3 /* RenderError.swift */,
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
 				32997E3E2ABBF42700F5BDD3 /* Uniforms.swift */,
+				32997E442ABBFBC200F5BDD3 /* ImageExporter.swift */,
+				32997E482ABC012D00F5BDD3 /* ExportError.swift */,
 				32997E422ABBF73D00F5BDD3 /* render.metal */,
 				32997E372ABB8D8200F5BDD3 /* Wrappers */,
 			);
@@ -148,6 +154,8 @@
 			files = (
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
+				32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */,
+				32997E452ABBFBC200F5BDD3 /* ImageExporter.swift in Sources */,
 				32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */,
 				32997E362ABB8C9D00F5BDD3 /* RenderError.swift in Sources */,
 				32997E432ABBF73D00F5BDD3 /* render.metal in Sources */,
