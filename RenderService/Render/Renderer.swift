@@ -13,8 +13,9 @@ class Renderer {
 	let device: RenderDevice
 	let pipeline: MTLComputePipelineState
 	let targetTexture: MTLTexture
-	let uniformsBufer: MTLBuffer
+	let uniformsBuffer: MTLBuffer
 	let accelerationStructure: MTLAccelerationStructure
+	var uniforms: Uniforms
 	
 	init(device: RenderDevice, config: RenderConfiguration) throws {
 		self.config = config
@@ -22,12 +23,17 @@ class Renderer {
 		self.pipeline = try device.makeComputePipeline(constants: config.makeShaderConstants())
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
 		let uniforms = Uniforms(camera: Camera(position: SIMD3(2, 2, -1), forward: SIMD3(0, 0, 1), right: SIMD3(1, 0, 0), up: SIMD3(0, 1, 0)), frame: 0)
-		self.uniformsBufer = try device.makeUniformsBuffer(data: uniforms)
+		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
 		let (vertices, triangles) = generateTestScene()
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
+		self.uniforms = uniforms
 	}
 	
 	func draw() throws {
+		self.uniforms.frame += 1
+		var uniforms = self.uniforms
+		self.uniformsBuffer.contents().copyMemory(from: &uniforms, byteCount: MemoryLayout<Uniforms>.stride)
+		
 		let commandBuffer = try self.device.makeCommandBuffer()
 		guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
 			throw RenderError.commandEncoder
@@ -41,7 +47,7 @@ class Renderer {
 		)
 		
 		encoder.setComputePipelineState(self.pipeline)
-		encoder.setBuffer(self.uniformsBufer, offset: 0, index: 0)
+		encoder.setBuffer(self.uniformsBuffer, offset: 0, index: 0)
 		encoder.setAccelerationStructure(self.accelerationStructure, bufferIndex: 1)
 		encoder.setTexture(self.targetTexture, index: 0)
 		encoder.dispatchThreads(gridSize, threadsPerThreadgroup: groupSize)
