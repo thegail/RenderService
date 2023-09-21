@@ -54,14 +54,14 @@ class RenderDevice {
 		return commandBuffer
 	}
 	
-	func makeComputePipeline() throws -> MTLComputePipelineState {
+	func makeComputePipeline(constants: MTLFunctionConstantValues) throws -> MTLComputePipelineState {
 		guard let library = self.inner.makeDefaultLibrary() else {
 			throw RenderError.library
 		}
 		
 		let state: MTLComputePipelineState
 		do {
-			let function = try library.makeFunction(name: "render_image", constantValues: MTLFunctionConstantValues())
+			let function = try library.makeFunction(name: "render_image", constantValues: constants)
 			state = try self.inner.makeComputePipelineState(function: function)
 		} catch {
 			throw RenderError.computePipeline

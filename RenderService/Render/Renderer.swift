@@ -19,9 +19,10 @@ class Renderer {
 	init(device: RenderDevice, config: RenderConfiguration) throws {
 		self.config = config
 		self.device = device
-		self.pipeline = try device.makeComputePipeline()
+		self.pipeline = try device.makeComputePipeline(constants: config.makeShaderConstants())
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
-		self.uniformsBufer = try device.makeUniformsBuffer(data: Uniforms())
+		let uniforms = Uniforms(camera: Camera(position: SIMD3(2, 2, -1), forward: SIMD3(0, 0, 1), right: SIMD3(1, 0, 0), up: SIMD3(0, 1, 0)), frame: 0)
+		self.uniformsBufer = try device.makeUniformsBuffer(data: uniforms)
 		let (vertices, triangles) = generateTestScene()
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
 	}
