@@ -61,7 +61,8 @@ class Cube {
 			normal *= -1
 		}
 		
-		return [Triangle(normal: normal, color: SIMD3(repeating: 0.5), tex_id: 0, face_div: 0), Triangle(normal: normal, color: SIMD3(repeating: 0.5), tex_id: 0, face_div: 1)]
+		let color = self.scale.y == 1 ? SIMD3<Float>(repeating: 1) : SIMD3<Float>(repeating: 0.5)
+		return [Triangle(normal: normal, color: color, tex_id: 0, face_div: 0), Triangle(normal: normal, color: color, tex_id: 0, face_div: 1)]
 	}
 	
 	private static func faceVertices(face: Face) -> Array<SIMD3<Float>> {
