@@ -113,4 +113,69 @@ class RenderDevice {
 		
 		return buffer
 	}
+	
+	func makeDataBuffer<T>(data: Array<T>) throws -> MTLBuffer {
+		let buffer = self.inner.makeBuffer(
+			bytes: data,
+			length: data.count * MemoryLayout<T>.stride
+		)
+		guard let buffer = buffer else {
+			throw RenderError.dataBuffer
+		}
+		
+		return buffer
+	}
+	
+	func makeAccelerationStructure(vertices: Array<SIMD3<Float>>, triangles: Array<Triangle>) throws -> MTLAccelerationStructure {
+		let vertexBuffer = try self.makeDataBuffer(data: vertices)
+		let primitiveBuffer = try self.makeDataBuffer(data: triangles)
+		
+		let geometryDescriptor = MTLAccelerationStructureTriangleGeometryDescriptor()
+		geometryDescriptor.vertexBuffer = vertexBuffer
+		geometryDescriptor.vertexStride = MemoryLayout<SIMD3<Float>>.stride
+		geometryDescriptor.triangleCount = triangles.count
+		geometryDescriptor.primitiveDataBuffer = primitiveBuffer
+		geometryDescriptor.primitiveDataStride = MemoryLayout<Triangle>.stride
+		geometryDescriptor.primitiveDataElementSize = MemoryLayout<Triangle>.stride
+
+		let structureDescriptor = MTLPrimitiveAccelerationStructureDescriptor()
+		structureDescriptor.geometryDescriptors = [geometryDescriptor]
+		
+		let sizes = self.inner.accelerationStructureSizes(descriptor: structureDescriptor)
+		guard let structure = self.inner.makeAccelerationStructure(size: sizes.accelerationStructureSize) else {
+			throw RenderError.accelerationStructure
+		}
+		guard let scratchBuffer = self.inner.makeBuffer(length: sizes.buildScratchBufferSize) else {
+			throw RenderError.dataBuffer
+		}
+		
+		let commandBuffer = try self.makeCommandBuffer()
+		guard let encoder = commandBuffer.makeAccelerationStructureCommandEncoder() else {
+			throw RenderError.accelerationStructure
+		}
+		let compactedSizeBuffer = self.inner.makeBuffer(length: MemoryLayout<UInt32>.stride, options: .storageModeShared)
+		guard let compactedSizeBuffer = compactedSizeBuffer else {
+			throw RenderError.uniformsBuffer
+		}
+		
+		encoder.build(accelerationStructure: structure, descriptor: structureDescriptor, scratchBuffer: scratchBuffer, scratchBufferOffset: 0)
+		encoder.writeCompactedSize(accelerationStructure: structure, buffer: compactedSizeBuffer, offset: 0)
+		encoder.endEncoding()
+		commandBuffer.commit()
+		commandBuffer.waitUntilCompleted()
+		
+		let compactedSize = compactedSizeBuffer.contents().assumingMemoryBound(to: UInt32.self).pointee
+		guard let compactedStructure = self.inner.makeAccelerationStructure(size: Int(compactedSize)) else {
+			throw RenderError.accelerationStructure
+		}
+		let copyCommandBuffer = try self.makeCommandBuffer()
+		guard let copyEncoder = copyCommandBuffer.makeAccelerationStructureCommandEncoder() else {
+			throw RenderError.accelerationStructure
+		}
+		copyEncoder.copyAndCompact(sourceAccelerationStructure: structure, destinationAccelerationStructure: compactedStructure)
+		copyEncoder.endEncoding()
+		copyCommandBuffer.commit()
+		copyCommandBuffer.waitUntilCompleted()
+		return compactedStructure
+	}
 }

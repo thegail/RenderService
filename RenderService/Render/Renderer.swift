@@ -14,6 +14,7 @@ class Renderer {
 	let pipeline: MTLComputePipelineState
 	let targetTexture: MTLTexture
 	let uniformsBufer: MTLBuffer
+	let accelerationStructure: MTLAccelerationStructure
 	
 	init(device: RenderDevice, config: RenderConfiguration) throws {
 		self.config = config
@@ -21,6 +22,8 @@ class Renderer {
 		self.pipeline = try device.makeComputePipeline()
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
 		self.uniformsBufer = try device.makeUniformsBuffer(data: Uniforms())
+		let (vertices, triangles) = generateTestScene()
+		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
 	}
 	
 	func draw() throws {
@@ -38,6 +41,7 @@ class Renderer {
 		
 		encoder.setComputePipelineState(self.pipeline)
 		encoder.setBuffer(self.uniformsBufer, offset: 0, index: 0)
+		encoder.setAccelerationStructure(self.accelerationStructure, bufferIndex: 1)
 		encoder.setTexture(self.targetTexture, index: 0)
 		encoder.dispatchThreads(gridSize, threadsPerThreadgroup: groupSize)
 		encoder.endEncoding()

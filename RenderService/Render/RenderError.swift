@@ -10,5 +10,6 @@ import Foundation
 enum RenderError: LocalizedError {
 	case device, commandQueue, commandBuffer, computePipeline
 	case library, targetTexture, commandEncoder, uniformsBuffer
-	case inspectionTexture, blitEncoder
+	case inspectionTexture, blitEncoder, dataBuffer
+	case accelerationStructure
 }
