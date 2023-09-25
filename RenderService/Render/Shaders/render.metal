@@ -7,7 +7,7 @@
 
 #include "trace.h"
 
-constant uint max_bounces [[function_constant(1)]];
+constant uint max_bounces [[function_constant(0)]];
 
 constant unsigned int primes[] = {
 	2,   3,  5,  7,
