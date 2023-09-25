@@ -12,6 +12,7 @@ class Renderer {
 	let config: RenderConfiguration
 	let device: RenderDevice
 	let pipeline: MTLComputePipelineState
+	let postPipeline: MTLComputePipelineState
 	let targetTexture: MTLTexture
 	let uniformsBuffer: MTLBuffer
 	let accelerationStructure: MTLAccelerationStructure
@@ -21,6 +22,7 @@ class Renderer {
 		self.config = config
 		self.device = device
 		self.pipeline = try device.makeComputePipeline(constants: config.makeShaderConstants())
+		self.postPipeline = try device.makePostPipeline()
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
 		let uniforms = Uniforms(camera: Camera(position: SIMD3(2, 2, -1), forward: SIMD3(0, 0, 1), right: SIMD3(1, 0, 0), up: SIMD3(0, 1, 0)), frame: 0)
 		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
@@ -30,7 +32,10 @@ class Renderer {
 	}
 	
 	func draw() throws {
-		self.uniforms.frame += 1
+		if self.uniforms.frame == 0 {
+//			self.device.startCapture()
+		}
+		
 		var uniforms = self.uniforms
 		self.uniformsBuffer.contents().copyMemory(from: &uniforms, byteCount: MemoryLayout<Uniforms>.stride)
 		
@@ -55,16 +60,30 @@ class Renderer {
 		
 		commandBuffer.commit()
 		commandBuffer.waitUntilCompleted()
+		
+//		self.device.endCapture()
+		
+		self.uniforms.frame += 1
 	}
 	
 	func export() throws -> Data {
 		let texture = try self.device.makeInspectionTexture(width: self.config.width, height: self.config.height)
 		let commandBuffer = try self.device.makeCommandBuffer()
-		guard let encoder = commandBuffer.makeBlitCommandEncoder() else {
-			throw RenderError.blitEncoder
+		guard let encoder = commandBuffer.makeComputeCommandEncoder() else {
+			throw RenderError.commandEncoder
 		}
 		
-		encoder.copy(from: self.targetTexture, to: texture)
+		let gridSize = MTLSize(width: self.config.width, height: self.config.height, depth: 1)
+		let groupSize = MTLSize(
+			width: self.postPipeline.threadExecutionWidth,
+			height: self.postPipeline.maxTotalThreadsPerThreadgroup / self.pipeline.threadExecutionWidth,
+			depth: 1
+		)
+		
+		encoder.setComputePipelineState(self.postPipeline)
+		encoder.setTexture(self.targetTexture, index: 0)
+		encoder.setTexture(texture, index: 1)
+		encoder.dispatchThreads(gridSize, threadsPerThreadgroup: groupSize)
 		encoder.endEncoding()
 		commandBuffer.commit()
 		commandBuffer.waitUntilCompleted()

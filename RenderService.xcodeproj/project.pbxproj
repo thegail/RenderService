@@ -17,6 +17,11 @@
 		32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E482ABC012D00F5BDD3 /* ExportError.swift */; };
 		32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E4D2ABC07BA00F5BDD3 /* Cube.swift */; };
 		32997E522ABCA3E100F5BDD3 /* generateTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */; };
+		32997E562ABCC99000F5BDD3 /* post.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E552ABCC99000F5BDD3 /* post.metal */; };
+		32997E592ABE012700F5BDD3 /* camera.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E582ABE012700F5BDD3 /* camera.metal */; };
+		32997E5B2ABE325E00F5BDD3 /* emission.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5A2ABE325E00F5BDD3 /* emission.metal */; };
+		32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5C2ABE32D900F5BDD3 /* absorption.metal */; };
+		32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E602ABE33FF00F5BDD3 /* sample.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +50,12 @@
 		32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = generateTestScene.swift; sourceTree = "<group>"; };
 		32997E532ABCAC9F00F5BDD3 /* bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridging.h; sourceTree = "<group>"; };
 		32997E542ABCACFF00F5BDD3 /* uniforms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uniforms.h; sourceTree = "<group>"; };
+		32997E552ABCC99000F5BDD3 /* post.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = post.metal; sourceTree = "<group>"; };
+		32997E572ABE009300F5BDD3 /* trace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = trace.h; sourceTree = "<group>"; };
+		32997E582ABE012700F5BDD3 /* camera.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = camera.metal; sourceTree = "<group>"; };
+		32997E5A2ABE325E00F5BDD3 /* emission.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = emission.metal; sourceTree = "<group>"; };
+		32997E5C2ABE32D900F5BDD3 /* absorption.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = absorption.metal; sourceTree = "<group>"; };
+		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +121,7 @@
 				32997E312ABB8C0300F5BDD3 /* Renderer.swift */,
 				32997E352ABB8C9D00F5BDD3 /* RenderError.swift */,
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
-				32997E422ABBF73D00F5BDD3 /* render.metal */,
+				32997E622ABE347E00F5BDD3 /* Shaders */,
 				32997E542ABCACFF00F5BDD3 /* uniforms.h */,
 			);
 			path = Render;
@@ -123,6 +134,20 @@
 				32997E512ABCA3E100F5BDD3 /* generateTestScene.swift */,
 			);
 			path = Geometry;
+			sourceTree = "<group>";
+		};
+		32997E622ABE347E00F5BDD3 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				32997E422ABBF73D00F5BDD3 /* render.metal */,
+				32997E602ABE33FF00F5BDD3 /* sample.metal */,
+				32997E5A2ABE325E00F5BDD3 /* emission.metal */,
+				32997E582ABE012700F5BDD3 /* camera.metal */,
+				32997E5C2ABE32D900F5BDD3 /* absorption.metal */,
+				32997E572ABE009300F5BDD3 /* trace.h */,
+				32997E552ABCC99000F5BDD3 /* post.metal */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,14 +210,19 @@
 			files = (
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
+				32997E562ABCC99000F5BDD3 /* post.metal in Sources */,
 				32997E492ABC012D00F5BDD3 /* ExportError.swift in Sources */,
 				32997E522ABCA3E100F5BDD3 /* generateTestScene.swift in Sources */,
 				32997E452ABBFBC200F5BDD3 /* ImageExporter.swift in Sources */,
+				32997E5B2ABE325E00F5BDD3 /* emission.metal in Sources */,
 				32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */,
 				32997E362ABB8C9D00F5BDD3 /* RenderError.swift in Sources */,
 				32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */,
+				32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */,
 				32997E432ABBF73D00F5BDD3 /* render.metal in Sources */,
+				32997E592ABE012700F5BDD3 /* camera.metal in Sources */,
 				32997E2B2ABB8B4E00F5BDD3 /* main.swift in Sources */,
+				32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +285,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = RenderService/bridging.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -308,6 +339,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = RenderService/bridging.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;

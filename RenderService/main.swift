@@ -7,12 +7,16 @@
 
 import Foundation
 
-let configuration = RenderConfiguration(width: 100, height: 100, maxBounces: 3)
+let configuration = RenderConfiguration(width: 1080, height: 1080, maxBounces: 6)
 let renderer = try Renderer(device: RenderDevice(), config: configuration)
 
-for _ in 1...6000 {
+let samples = 10_000
+for i in 1...samples {
 	try renderer.draw()
+	if i % 100 == 0 {
+		print("\((100 * i) / samples)%")
+	}
 }
 
 let output = try renderer.export()
-try exportPNG(data: output, filePath: URL(filePath: "/Users/thegail/Desktop/render.png"), width: 100, height: 100)
+try exportPNG(data: output, filePath: URL(filePath: "/Users/thegail/Desktop/render.png"), width: configuration.width, height: configuration.height)

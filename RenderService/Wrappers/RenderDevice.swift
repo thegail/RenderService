@@ -70,6 +70,24 @@ class RenderDevice {
 		return state
 	}
 	
+	func makePostPipeline() throws -> MTLComputePipelineState {
+		guard let library = self.inner.makeDefaultLibrary() else {
+			throw RenderError.library
+		}
+		
+		let state: MTLComputePipelineState
+		do {
+			guard let function = library.makeFunction(name: "post") else {
+				throw RenderError.computePipeline
+			}
+			state = try self.inner.makeComputePipelineState(function: function)
+		} catch {
+			throw RenderError.computePipeline
+		}
+		
+		return state
+	}
+	
 	func makeTargetTexture(width: Int, height: Int) throws -> MTLTexture {
 		let descriptor = MTLTextureDescriptor()
 		descriptor.width = width
@@ -177,5 +195,16 @@ class RenderDevice {
 		copyCommandBuffer.commit()
 		copyCommandBuffer.waitUntilCompleted()
 		return compactedStructure
+	}
+	
+	func startCapture() {
+		let desc = MTLCaptureDescriptor()
+		desc.captureObject = self.inner
+		desc.destination = .developerTools
+		try! MTLCaptureManager.shared().startCapture(with: desc)
+	}
+	
+	func endCapture() {
+		MTLCaptureManager.shared().stopCapture()
 	}
 }
