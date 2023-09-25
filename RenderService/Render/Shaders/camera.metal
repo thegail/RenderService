@@ -35,7 +35,7 @@ float3 sample_aperture(float length, float aperture, float2 random) {
 	return float3(cos_theta * radius, sin_theta * radius, length);
 }
 
-constant float thin_lens_aperture [[function_constant(10)]];
+constant float camera_aperture [[function_constant(10)]];
 constant float lens_distance [[function_constant(11)]];
 constant float focus_distance [[function_constant(12)]];
 ray thin_lens(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms& uniforms) {
@@ -47,7 +47,7 @@ ray thin_lens(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniform
 	float focus_point_distance = focus_distance / focus_point_direction.z;
 	float3 focus_point = focus_point_distance * focus_point_direction;
 	
-	float3 lens_sample = sample_aperture(lens_distance, thin_lens_aperture, r);
+	float3 lens_sample = sample_aperture(lens_distance, camera_aperture, r);
 	float3 ray_direction = normalize(focus_point - lens_sample);
 	float3x3 camera_to_world = float3x3(uniforms.camera.right,
 										uniforms.camera.up,

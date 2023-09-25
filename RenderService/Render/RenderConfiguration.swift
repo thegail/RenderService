@@ -22,7 +22,7 @@ struct RenderConfiguration {
 		let values = MTLFunctionConstantValues()
 		values.setConstantValue(&maxBounces, type: .uint, withName: "max_bounces")
 		values.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
-		values.setConstantValue(&thinLensAperture, type: .float, withName: "thin_lens_aperture")
+		values.setConstantValue(&thinLensAperture, type: .float, withName: "camera_aperture")
 		values.setConstantValue(&lensDistance, type: .float, withName: "lens_distance")
 		values.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
 		
