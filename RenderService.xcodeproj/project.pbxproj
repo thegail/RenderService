@@ -141,8 +141,8 @@
 			children = (
 				32997E422ABBF73D00F5BDD3 /* render.metal */,
 				32997E602ABE33FF00F5BDD3 /* sample.metal */,
-				32997E5A2ABE325E00F5BDD3 /* emission.metal */,
 				32997E582ABE012700F5BDD3 /* camera.metal */,
+				32997E5A2ABE325E00F5BDD3 /* emission.metal */,
 				32997E5C2ABE32D900F5BDD3 /* absorption.metal */,
 				32997E572ABE009300F5BDD3 /* trace.h */,
 				32997E552ABCC99000F5BDD3 /* post.metal */,

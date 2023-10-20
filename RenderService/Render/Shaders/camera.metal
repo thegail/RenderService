@@ -61,11 +61,101 @@ ray thin_lens(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniform
 	return ray;
 }
 
+float solve_quadratic(float b, float c, bool largest) {
+	float discr = b*b - 4*c;
+	if (discr < 0) return NAN;
+	if (discr == 0) return -0.5 * b;
+	float q = (b > 0) ?
+		-0.5 * (b + sqrt(discr)) :
+		-0.5 * (b - sqrt(discr));
+	float x0 = q;
+	float x1 = c / q;
+	return largest ? max(x0, x1) : min(x0, x1);
+}
+
+float intersect_sphere(float3 ray_origin,
+					   float3 ray_direction,
+					   float3 sphere_position,
+					   float radius,
+					   bool concave) {
+	float3 center = ray_origin - sphere_position;
+	float b = 2 * dot(ray_direction, center);
+	float c = length_squared(center) - radius*radius;
+	return solve_quadratic(b, c, concave);
+}
+
+struct Lens {
+	float3 centerpoint;
+	float radius;
+	float segment_length;
+	float refractive_index;
+	bool concave;
+};
+
+ray lens_refract(ray incident,
+				 Lens lens,
+				 float2 random) {
+	ray ray;
+	ray.direction = float3(0);
+	
+	float3 sphere_center = lens.centerpoint - float3(0, 0, lens.radius);
+	float intersection_distance = intersect_sphere(incident.origin,
+												   incident.direction,
+												   sphere_center,
+												   lens.radius,
+												   lens.concave);
+	if (isnan(intersection_distance) || intersection_distance < 0) return ray;
+	float3 intersection_point = incident.origin + incident.direction * intersection_distance;
+	float normal_scalar = lens.concave ? -1 : 1;
+	float3 normal = normal_scalar * normalize(intersection_point - sphere_center);
+	float3 new_direction = refract(incident.direction, normal, lens.refractive_index);
+	
+	ray.origin = intersection_point;
+	ray.direction = new_direction;
+	return ray;
+}
+
+ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant Uniforms& uniforms) {
+	float thickness = 0.1;
+	
+	Lens front;
+	front.centerpoint = float3(0, 0, lens_distance);
+	front.radius = 10;
+	front.segment_length = -1;
+	front.refractive_index = 1.52708;
+	front.concave = true;
+	
+	Lens back;
+	back.centerpoint = front.centerpoint + float3(0, 0, thickness);
+	back.radius = 10;
+	back.segment_length = -1;
+	back.refractive_index = 1/1.52708;
+	back.concave = true;
+	
+	ray ray;
+	ray.origin = float3(0);
+	ray.direction = normalize(sample_aperture(lens_distance + thickness - 0.05, sqrt(front.radius*front.radius - 0.05*0.05), random));
+	ray.max_distance = INFINITY;
+	
+	ray = lens_refract(ray, front, random);
+	ray = lens_refract(ray, back, random);
+	
+	float3x3 camera_to_world = float3x3(uniforms.camera.right,
+										uniforms.camera.up,
+										uniforms.camera.forward);
+	ray.origin = camera_to_world * ray.origin + uniforms.camera.position;
+	ray.direction = camera_to_world * ray.direction;
+	
+	return ray;
+}
+
 ray get_view_ray(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms& uniforms) {
 	if (camera_type == 0) {
 		return pinhole(screen_coords, screen_size, r, uniforms);
 	} else if (camera_type == 1) {
 		return thin_lens(screen_coords, screen_size, r, uniforms);
+	} else if (camera_type == 2) {
+		return thick_lens(screen_coords, screen_size, r, uniforms);
 	} else {
 		ray ray;
 		return ray;
