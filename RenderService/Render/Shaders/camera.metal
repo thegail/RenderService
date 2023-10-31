@@ -35,6 +35,10 @@ float3 sample_aperture(float length, float aperture, float2 random) {
 	return float3(cos_theta * radius, sin_theta * radius, length);
 }
 
+float3 sample_rectangle(float2 dimensions, uint2 coords, uint2 size) {
+	return float3(dimensions * (2 * float2(coords) / float2(size) - 1), 0);
+}
+
 constant float camera_aperture [[function_constant(10)]];
 constant float lens_distance [[function_constant(11)]];
 constant float focus_distance [[function_constant(12)]];
@@ -120,21 +124,21 @@ ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant U
 	
 	Lens front;
 	front.centerpoint = float3(0, 0, lens_distance);
-	front.radius = 10;
+	front.radius = 2;
 	front.segment_length = -1;
-	front.refractive_index = 1.52708;
+	front.refractive_index = 1/1.52708;
 	front.concave = true;
 	
 	Lens back;
 	back.centerpoint = front.centerpoint + float3(0, 0, thickness);
-	back.radius = 10;
+	back.radius = 0.7;
 	back.segment_length = -1;
-	back.refractive_index = 1/1.52708;
+	back.refractive_index = 1.52708;
 	back.concave = true;
 	
 	ray ray;
-	ray.origin = float3(0);
-	ray.direction = normalize(sample_aperture(lens_distance + thickness - 0.05, sqrt(front.radius*front.radius - 0.05*0.05), random));
+	ray.origin = sample_rectangle(float2(12), screen_coords, screen_size);
+	ray.direction = normalize(sample_aperture(lens_distance + thickness - 0.05, sqrt(front.radius*front.radius - 0.05*0.05), random) - ray.origin);
 	ray.max_distance = INFINITY;
 	
 	ray = lens_refract(ray, front, random);
