@@ -123,7 +123,7 @@ ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant U
 	float thickness = 0.1;
 	
 	Lens front;
-	front.centerpoint = float3(0, 0, lens_distance);
+	front.centerpoint = float3(0, 0, -thickness);
 	front.radius = 2;
 	front.segment_length = -1;
 	front.refractive_index = 1/1.52708;
@@ -137,8 +137,8 @@ ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant U
 	back.concave = true;
 	
 	ray ray;
-	ray.origin = sample_rectangle(float2(12), screen_coords, screen_size);
-	ray.direction = normalize(sample_aperture(lens_distance + thickness - 0.05, sqrt(front.radius*front.radius - 0.05*0.05), random) - ray.origin);
+	ray.origin = sample_rectangle(float2(12), screen_coords, screen_size) - float3(0, 0, lens_distance);
+	ray.direction = normalize(sample_aperture(-0.05, sqrt(front.radius*front.radius - 0.05*0.05), random) - ray.origin);
 	ray.max_distance = INFINITY;
 	
 	ray = lens_refract(ray, front, random);
