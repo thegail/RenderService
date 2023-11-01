@@ -13,15 +13,7 @@
 #define float3 simd_float3
 #endif /* __METAL_VERSION__ */
 
-struct Camera {
-	float3 position;
-	float3 forward;
-	float3 right;
-	float3 up;
-};
-
 struct Uniforms {
-	struct Camera camera;
 	uint frame;
 };
 

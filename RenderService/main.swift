@@ -7,12 +7,15 @@
 
 import Foundation
 
-let configuration = RenderConfiguration(width: 300, height: 300, maxBounces: 4)
+let configuration = RenderConfiguration(width: 1000, height: 1000, maxBounces: 4, camera: Camera(position: SIMD3(2, 2, 0), pitch: 0, roll: 0, yaw: 0))
 let renderer = try Renderer(device: RenderDevice(), config: configuration)
 
 let samples = 10000
-for _ in 1...samples {
+for i in 1...samples {
 	try renderer.draw()
+	if i % (samples / 100) == 0 {
+		print("\(i / (samples / 100))%")
+	}
 }
 
 let output = try renderer.export()

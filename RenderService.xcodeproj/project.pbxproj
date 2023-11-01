@@ -22,6 +22,7 @@
 		32997E5B2ABE325E00F5BDD3 /* emission.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5A2ABE325E00F5BDD3 /* emission.metal */; };
 		32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5C2ABE32D900F5BDD3 /* absorption.metal */; };
 		32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E602ABE33FF00F5BDD3 /* sample.metal */; };
+		32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C762AF2BE0A0068F655 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,6 +57,7 @@
 		32997E5A2ABE325E00F5BDD3 /* emission.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = emission.metal; sourceTree = "<group>"; };
 		32997E5C2ABE32D900F5BDD3 /* absorption.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = absorption.metal; sourceTree = "<group>"; };
 		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
+		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				32997E2A2ABB8B4E00F5BDD3 /* main.swift */,
 				32997E532ABCAC9F00F5BDD3 /* bridging.h */,
+				32CC5C752AF2BDF70068F655 /* Configuration */,
 				32997E4C2ABC072400F5BDD3 /* Geometry */,
 				32997E4B2ABC071000F5BDD3 /* Render */,
 				32997E4A2ABC06F700F5BDD3 /* Export */,
@@ -120,7 +123,6 @@
 			children = (
 				32997E312ABB8C0300F5BDD3 /* Renderer.swift */,
 				32997E352ABB8C9D00F5BDD3 /* RenderError.swift */,
-				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
 				32997E622ABE347E00F5BDD3 /* Shaders */,
 				32997E542ABCACFF00F5BDD3 /* uniforms.h */,
 			);
@@ -148,6 +150,15 @@
 				32997E552ABCC99000F5BDD3 /* post.metal */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		32CC5C752AF2BDF70068F655 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
+				32CC5C762AF2BE0A0068F655 /* Camera.swift */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */,
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
 				32997E562ABCC99000F5BDD3 /* post.metal in Sources */,

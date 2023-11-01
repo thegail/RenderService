@@ -24,7 +24,7 @@ class Renderer {
 		self.pipeline = try device.makeComputePipeline(constants: config.makeShaderConstants())
 		self.postPipeline = try device.makePostPipeline()
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
-		let uniforms = Uniforms(camera: Camera(position: SIMD3(2, 2, 0), forward: SIMD3(0, 0, 1), right: SIMD3(1, 0, 0), up: SIMD3(0, 1, 0)), frame: 0)
+		let uniforms = Uniforms(frame: 0)
 		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
 		let (vertices, triangles) = generateTestScene()
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
@@ -32,10 +32,6 @@ class Renderer {
 	}
 	
 	func draw() throws {
-		if self.uniforms.frame == 0 {
-//			self.device.startCapture()
-		}
-		
 		var uniforms = self.uniforms
 		self.uniformsBuffer.contents().copyMemory(from: &uniforms, byteCount: MemoryLayout<Uniforms>.stride)
 		
@@ -60,8 +56,6 @@ class Renderer {
 		
 		commandBuffer.commit()
 		commandBuffer.waitUntilCompleted()
-		
-//		self.device.endCapture()
 		
 		self.uniforms.frame += 1
 	}

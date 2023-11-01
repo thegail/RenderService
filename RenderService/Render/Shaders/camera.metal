@@ -8,6 +8,10 @@
 #include "trace.h"
 
 constant uchar camera_type [[function_constant(1)]];
+constant float3 camera_position [[function_constant(2)]];
+constant float3 camera_up [[function_constant(3)]];
+constant float3 camera_right [[function_constant(4)]];
+constant float3 camera_forward [[function_constant(5)]];
 
 ray pinhole(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms& uniforms) {
 	float2 pixel = float2(screen_coords);
@@ -18,10 +22,10 @@ ray pinhole(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms&
 	uv.y *= -1;
 	
 	ray ray;
-	ray.origin = uniforms.camera.position;
-	ray.direction = normalize(uv.x * uniforms.camera.right +
-							  uv.y * uniforms.camera.up +
-							  uniforms.camera.forward);
+	ray.origin = camera_position;
+	ray.direction = normalize(uv.x * camera_right +
+							  uv.y * camera_up +
+							  camera_forward);
 	ray.max_distance = INFINITY;
 	
 	return ray;
@@ -35,8 +39,8 @@ float3 sample_aperture(float length, float aperture, float2 random) {
 	return float3(cos_theta * radius, sin_theta * radius, length);
 }
 
-float3 sample_rectangle(float2 dimensions, uint2 coords, uint2 size) {
-	return float3(dimensions * (2 * float2(coords) / float2(size) - 1), 0);
+float3 sample_rectangle(float2 dimensions, uint2 coords, uint2 size, float z) {
+	return float3(dimensions * (2 * float2(coords) / float2(size) - 1), z);
 }
 
 constant float camera_aperture [[function_constant(10)]];
@@ -51,14 +55,14 @@ ray thin_lens(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniform
 	float focus_point_distance = focus_distance / focus_point_direction.z;
 	float3 focus_point = focus_point_distance * focus_point_direction;
 	
-	float3 lens_sample = sample_aperture(lens_distance, camera_aperture, r);
+	float3 lens_sample = sample_aperture(0, camera_aperture, r);
 	float3 ray_direction = normalize(focus_point - lens_sample);
-	float3x3 camera_to_world = float3x3(uniforms.camera.right,
-										uniforms.camera.up,
-										uniforms.camera.forward);
+	float3x3 camera_to_world = float3x3(camera_right,
+										camera_up,
+										camera_forward);
 	
 	ray ray;
-	ray.origin = camera_to_world * lens_sample + uniforms.camera.position;
+	ray.origin = camera_to_world * lens_sample + camera_position;
 	ray.direction = camera_to_world * ray_direction;
 	ray.max_distance = INFINITY;
 	
@@ -119,35 +123,36 @@ ray lens_refract(ray incident,
 	return ray;
 }
 
+constant float2 sample_screen_size [[function_constant(13)]];
+constant float aperture_distance [[function_constant(14)]];
+constant float lens_thickness [[function_constant(15)]];
 ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant Uniforms& uniforms) {
-	float thickness = 0.1;
-	
 	Lens front;
-	front.centerpoint = float3(0, 0, -thickness);
+	front.centerpoint = float3(0, 0, -lens_thickness);
 	front.radius = 2;
 	front.segment_length = -1;
 	front.refractive_index = 1/1.52708;
 	front.concave = true;
 	
 	Lens back;
-	back.centerpoint = front.centerpoint + float3(0, 0, thickness);
+	back.centerpoint = front.centerpoint + float3(0, 0, lens_thickness);
 	back.radius = 0.7;
 	back.segment_length = -1;
 	back.refractive_index = 1.52708;
 	back.concave = true;
 	
 	ray ray;
-	ray.origin = sample_rectangle(float2(12), screen_coords, screen_size) - float3(0, 0, lens_distance);
-	ray.direction = normalize(sample_aperture(-0.05, sqrt(front.radius*front.radius - 0.05*0.05), random) - ray.origin);
+	ray.origin = sample_rectangle(sample_screen_size, screen_coords, screen_size, -lens_distance);
+	ray.direction = normalize(sample_aperture(-lens_thickness - aperture_distance, camera_aperture, random) - ray.origin);
 	ray.max_distance = INFINITY;
 	
 	ray = lens_refract(ray, front, random);
 	ray = lens_refract(ray, back, random);
 	
-	float3x3 camera_to_world = float3x3(uniforms.camera.right,
-										uniforms.camera.up,
-										uniforms.camera.forward);
-	ray.origin = camera_to_world * ray.origin + uniforms.camera.position;
+	float3x3 camera_to_world = float3x3(camera_right,
+										camera_up,
+										camera_forward);
+	ray.origin = camera_to_world * ray.origin + camera_position;
 	ray.direction = camera_to_world * ray.direction;
 	
 	return ray;
