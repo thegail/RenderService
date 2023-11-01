@@ -11,7 +11,7 @@ import SwiftUI
 struct LensDesignerApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: LensDesignerDocument()) { file in
-            
+			Editor(document: file.$document)
         }
     }
 }

@@ -28,6 +28,7 @@
 		32CC5C9A2AF2D0490068F655 /* LensDesignerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C992AF2D0490068F655 /* LensDesignerDocument.swift */; };
 		32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C9B2AF2D0490068F655 /* Editor.swift */; };
 		32CC5C9E2AF2D04A0068F655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */; };
+		32CC5CA82AF2EE3A0068F655 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA72AF2EE3A0068F655 /* Lens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,6 +73,7 @@
 		32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32CC5CA22AF2D04A0068F655 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32CC5CA32AF2D04A0068F655 /* LensDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LensDesigner.entitlements; sourceTree = "<group>"; };
+		32CC5CA72AF2EE3A0068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 				32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */,
 				32CC5C992AF2D0490068F655 /* LensDesignerDocument.swift */,
 				32CC5C9B2AF2D0490068F655 /* Editor.swift */,
+				32CC5CA72AF2EE3A0068F655 /* Lens.swift */,
 				32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */,
 				32CC5CA22AF2D04A0068F655 /* Info.plist */,
 				32CC5CA32AF2D04A0068F655 /* LensDesigner.entitlements */,
@@ -316,6 +319,7 @@
 				32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */,
 				32CC5C9A2AF2D0490068F655 /* LensDesignerDocument.swift in Sources */,
 				32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */,
+				32CC5CA82AF2EE3A0068F655 /* Lens.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,7 +470,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LensDesigner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LensDesigner/Info.plist;
@@ -492,7 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LensDesigner/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LensDesigner/Info.plist;
