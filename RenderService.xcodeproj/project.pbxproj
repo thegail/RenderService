@@ -60,6 +60,7 @@
 		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
 		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		32CC5C782AF2C7A50068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		32CC5C902AF2CFE00068F655 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +77,7 @@
 		32997E1E2ABB8B4E00F5BDD3 = {
 			isa = PBXGroup;
 			children = (
+				32CC5C902AF2CFE00068F655 /* .gitignore */,
 				32997E292ABB8B4E00F5BDD3 /* RenderService */,
 				32997E282ABB8B4E00F5BDD3 /* Products */,
 			);
