@@ -23,6 +23,7 @@
 		32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5C2ABE32D900F5BDD3 /* absorption.metal */; };
 		32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E602ABE33FF00F5BDD3 /* sample.metal */; };
 		32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C762AF2BE0A0068F655 /* Camera.swift */; };
+		32CC5C792AF2C7A50068F655 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C782AF2C7A50068F655 /* Lens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -58,6 +59,7 @@
 		32997E5C2ABE32D900F5BDD3 /* absorption.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = absorption.metal; sourceTree = "<group>"; };
 		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
 		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		32CC5C782AF2C7A50068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
+				32CC5C782AF2C7A50068F655 /* Lens.swift */,
 				32CC5C762AF2BE0A0068F655 /* Camera.swift */,
 			);
 			path = Configuration;
@@ -230,6 +233,7 @@
 				32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */,
 				32997E362ABB8C9D00F5BDD3 /* RenderError.swift in Sources */,
 				32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */,
+				32CC5C792AF2C7A50068F655 /* Lens.swift in Sources */,
 				32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */,
 				32997E432ABBF73D00F5BDD3 /* render.metal in Sources */,
 				32997E592ABE012700F5BDD3 /* camera.metal in Sources */,

@@ -44,8 +44,7 @@ float3 sample_rectangle(float2 dimensions, uint2 coords, uint2 size, float z) {
 }
 
 constant float camera_aperture [[function_constant(10)]];
-constant float lens_distance [[function_constant(11)]];
-constant float focus_distance [[function_constant(12)]];
+constant float focus_distance [[function_constant(11)]];
 ray thin_lens(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms& uniforms) {
 	float2 uv = float2(screen_coords) / float2(screen_size.x);
 	uv = uv * 2 - 1.0f;
@@ -123,6 +122,7 @@ ray lens_refract(ray incident,
 	return ray;
 }
 
+constant float lens_distance [[function_constant(12)]];
 constant float2 sample_screen_size [[function_constant(13)]];
 constant float aperture_distance [[function_constant(14)]];
 constant float lens_thickness [[function_constant(15)]];

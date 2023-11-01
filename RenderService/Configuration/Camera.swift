@@ -24,7 +24,7 @@ struct Camera {
 	var rollMatrix: simd_float3x3 {
 		simd_float3x3(
 			SIMD3(cos(self.pitch), sin(self.pitch), 0),
-			SIMD3(-sin(self.pitch), -cos(self.pitch), 0),
+			SIMD3(-sin(self.pitch), cos(self.pitch), 0),
 			SIMD3(0, 0, 1)
 		)
 	}

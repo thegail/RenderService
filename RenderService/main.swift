@@ -7,7 +7,7 @@
 
 import Foundation
 
-let configuration = RenderConfiguration(width: 1000, height: 1000, maxBounces: 4, camera: Camera(position: SIMD3(2, 2, 0), pitch: 0, roll: 0, yaw: 0))
+let configuration = RenderConfiguration(width: 1000, height: 1000, maxBounces: 4, camera: Camera(position: SIMD3(2, 2, 0), pitch: 0, roll: 0, yaw: 0), lens: .pinhole)
 let renderer = try Renderer(device: RenderDevice(), config: configuration)
 
 let samples = 10000

@@ -13,16 +13,17 @@ struct RenderConfiguration {
 	let height: Int
 	let maxBounces: Int
 	let camera: Camera
+	let lens: Lens
 	
 	func makeShaderConstants() -> MTLFunctionConstantValues {
 		var maxBounces: UInt32 = UInt32(self.maxBounces)
-		var cameraType: UInt8 = 2
-		var thinLensAperture: Float = 2 - 1e-3
-		var lensDistance: Float = 6
-		var focusDistance: Float = 4
-		var sampleScreenSize: SIMD2<Float> = SIMD2(12, 12)
-		var apertureDistance: Float = 0.05
-		var lensThickness: Float = 0.1
+		var cameraType: UInt8 = self.lens.cameraTypeID
+		var thinLensAperture: Float = self.lens.aperture
+		var lensDistance: Float = self.lens.lensDistance
+		var focusDistance: Float = self.lens.focusDistance
+		var sampleScreenSize: SIMD2<Float> = self.lens.sampleScreenSize
+		var apertureDistance: Float = self.lens.apertureDistance
+		var lensThickness: Float = self.lens.thickness
 		var cameraPosition = self.camera.position
 		let cameraMatrix = self.camera.rotationMatrix
 		var cameraRight = cameraMatrix.columns.0
