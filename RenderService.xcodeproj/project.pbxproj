@@ -29,6 +29,8 @@
 		32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C9B2AF2D0490068F655 /* Editor.swift */; };
 		32CC5C9E2AF2D04A0068F655 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */; };
 		32CC5CA82AF2EE3A0068F655 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA72AF2EE3A0068F655 /* Lens.swift */; };
+		32CC5CAA2AF3F9790068F655 /* LensModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA92AF3F9790068F655 /* LensModel.swift */; };
+		32CC5CAC2AF4191F0068F655 /* UTType+lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -74,6 +76,8 @@
 		32CC5CA22AF2D04A0068F655 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32CC5CA32AF2D04A0068F655 /* LensDesigner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LensDesigner.entitlements; sourceTree = "<group>"; };
 		32CC5CA72AF2EE3A0068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		32CC5CA92AF3F9790068F655 /* LensModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensModel.swift; sourceTree = "<group>"; };
+		32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+lens.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,8 +197,10 @@
 			children = (
 				32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */,
 				32CC5C992AF2D0490068F655 /* LensDesignerDocument.swift */,
+				32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */,
 				32CC5C9B2AF2D0490068F655 /* Editor.swift */,
 				32CC5CA72AF2EE3A0068F655 /* Lens.swift */,
+				32CC5CA92AF3F9790068F655 /* LensModel.swift */,
 				32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */,
 				32CC5CA22AF2D04A0068F655 /* Info.plist */,
 				32CC5CA32AF2D04A0068F655 /* LensDesigner.entitlements */,
@@ -316,8 +322,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32CC5CAC2AF4191F0068F655 /* UTType+lens.swift in Sources */,
 				32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */,
 				32CC5C9A2AF2D0490068F655 /* LensDesignerDocument.swift in Sources */,
+				32CC5CAA2AF3F9790068F655 /* LensModel.swift in Sources */,
 				32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */,
 				32CC5CA82AF2EE3A0068F655 /* Lens.swift in Sources */,
 			);

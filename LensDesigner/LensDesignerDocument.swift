@@ -8,32 +8,31 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
-    }
-}
-
 struct LensDesignerDocument: FileDocument {
-    var text: String
+    var lenses: Array<LensModel>
 
-    init(text: String = "Hello, world!") {
-        self.text = text
+    init() {
+		self.lenses = [.default]
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+	static var readableContentTypes: [UTType] { [.lens] }
 
     init(configuration: ReadConfiguration) throws {
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
-        else {
+		guard let data = configuration.file.regularFileContents else {
             throw CocoaError(.fileReadCorruptFile)
         }
-        text = string
+		let decoder = PropertyListDecoder()
+		do {
+			self.lenses = try decoder.decode(Array<LensModel>.self, from: data)
+		} catch {
+			throw CocoaError(.fileReadCorruptFile)
+		}
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
+        let encoder = PropertyListEncoder()
+		encoder.outputFormat = .binary
+		let data = try encoder.encode(self.lenses)
         return .init(regularFileWithContents: data)
     }
 }
