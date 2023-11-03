@@ -48,30 +48,35 @@ enum CameraType {
 	}
 	
 	func setFunctionConstants(_ constants: MTLFunctionConstantValues) {
+		var cameraType: UInt8
+		var aperture: Float = 0
+		var focusDistance: Float = 0
+		var apertureDistance: Float = 0
+		var sampleScreenSize = SIMD2<Float>(repeating: 0)
+		var lensDistance: Float = 0
+		var lensCount: UInt32 = 0
 		switch self {
 		case .pinhole:
-			var cameraType: UInt8 = 0
-			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
+			cameraType = 0
 		case .thinLens(let lens):
-			var cameraType: UInt8 = 1
-			var aperture = lens.aperture
-			var focusDistance = lens.focusDistance
-			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
-			constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
-			constants.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
+			cameraType = 1
+			aperture = lens.aperture
+			focusDistance = lens.focusDistance
 		case .thickLens(let lens):
-			var cameraType: UInt8 = 2
-			var aperture = lens.aperture
-			var apertureDistance = lens.apertureDistance
-			var sampleScreenSize = lens.sampleScreenSize
-			var lensDistance = lens.lensDistance
-			var lensCount = lens.lenses.count
-			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
-			constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
-			constants.setConstantValue(&apertureDistance, type: .float, withName: "aperture_distance")
-			constants.setConstantValue(&sampleScreenSize, type: .float2, withName: "sample_screen_size")
-			constants.setConstantValue(&lensDistance, type: .float, withName: "lens_distance")
-			constants.setConstantValue(&lensCount, type: .uint, withName: "lens_count")
+			cameraType = 2
+			aperture = lens.aperture
+			apertureDistance = lens.apertureDistance
+			sampleScreenSize = lens.sampleScreenSize
+			lensDistance = lens.lensDistance
+			lensCount = UInt32(self.lensData.count)
 		}
+		constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
+		constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
+		constants.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
+		constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
+		constants.setConstantValue(&apertureDistance, type: .float, withName: "aperture_distance")
+		constants.setConstantValue(&sampleScreenSize, type: .float2, withName: "sample_screen_size")
+		constants.setConstantValue(&lensDistance, type: .float, withName: "lens_distance")
+		constants.setConstantValue(&lensCount, type: .uint, withName: "lens_count")
 	}
 }
