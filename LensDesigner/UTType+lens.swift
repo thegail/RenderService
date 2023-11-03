@@ -10,6 +10,6 @@ import UniformTypeIdentifiers
 
 extension UTType {
 	static var lens: UTType {
-		UTType(importedAs: "co.thegail.lens")
+		UTType(exportedAs: "co.thegail.lens")
 	}
 }

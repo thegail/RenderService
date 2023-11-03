@@ -31,6 +31,7 @@
 		32CC5CA82AF2EE3A0068F655 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA72AF2EE3A0068F655 /* Lens.swift */; };
 		32CC5CAA2AF3F9790068F655 /* LensModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA92AF3F9790068F655 /* LensModel.swift */; };
 		32CC5CAC2AF4191F0068F655 /* UTType+lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */; };
+		32CC5CAE2AF4A9940068F655 /* ControlButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAD2AF4A9940068F655 /* ControlButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -78,6 +79,7 @@
 		32CC5CA72AF2EE3A0068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
 		32CC5CA92AF3F9790068F655 /* LensModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensModel.swift; sourceTree = "<group>"; };
 		32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+lens.swift"; sourceTree = "<group>"; };
+		32CC5CAD2AF4A9940068F655 /* ControlButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				32CC5C992AF2D0490068F655 /* LensDesignerDocument.swift */,
 				32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */,
 				32CC5C9B2AF2D0490068F655 /* Editor.swift */,
+				32CC5CAD2AF4A9940068F655 /* ControlButtonStyle.swift */,
 				32CC5CA72AF2EE3A0068F655 /* Lens.swift */,
 				32CC5CA92AF3F9790068F655 /* LensModel.swift */,
 				32CC5C9D2AF2D04A0068F655 /* Assets.xcassets */,
@@ -324,6 +327,7 @@
 			files = (
 				32CC5CAC2AF4191F0068F655 /* UTType+lens.swift in Sources */,
 				32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */,
+				32CC5CAE2AF4A9940068F655 /* ControlButtonStyle.swift in Sources */,
 				32CC5C9A2AF2D0490068F655 /* LensDesignerDocument.swift in Sources */,
 				32CC5CAA2AF3F9790068F655 /* LensModel.swift in Sources */,
 				32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */,

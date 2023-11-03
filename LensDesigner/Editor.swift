@@ -62,13 +62,17 @@ struct Editor: View {
 					}, label: {
 						Image(systemName: "plus")
 					})
-					.buttonStyle(BorderlessButtonStyle())
-					.frame(width: 20, height: 20)
-					.background(.black.opacity(0.5))
-					.foregroundColor(.white)
-					.shadow(radius: 10)
-					.cornerRadius(5)
+					Button(action: {
+						guard let index = self.selectedIndex else {
+							return
+						}
+						self.selectedIndex = nil
+						self.document.lenses.remove(at: index)
+					}, label: {
+						Image(systemName: "trash.slash")
+					})
 				}
+				.buttonStyle(ControlButtonStyle())
 				.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
 			}
 			.padding()
