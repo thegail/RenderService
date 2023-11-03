@@ -52,11 +52,14 @@ uint hash_position(uint2 coords, uint2 size) {
 	return offset;
 }
 
+constant uchar camera_type [[function_constant(1)]];
+constant bool has_camera_buffer = camera_type == 2;
+
 kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 						 uint2 screen_size [[threads_per_grid]],
 						 constant Uniforms& uniforms [[buffer(0)]],
 						 primitive_acceleration_structure acceleration_structure [[buffer(1)]],
-						 constant void* camera_buffer [[buffer(2)]],
+						 constant void* camera_buffer [[buffer(2), function_constant(has_camera_buffer)]],
 						 texture2d<float, access::read_write> output) {
 	
 	uint offset = hash_position(screen_coords, screen_size) + uniforms.frame;
