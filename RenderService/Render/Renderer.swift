@@ -52,6 +52,7 @@ class Renderer {
 		encoder.setComputePipelineState(self.pipeline)
 		encoder.setBuffer(self.uniformsBuffer, offset: 0, index: 0)
 		encoder.setAccelerationStructure(self.accelerationStructure, bufferIndex: 1)
+		encoder.setBuffer(self.lensBuffer, offset: 0, index: 2)
 		encoder.setTexture(self.targetTexture, index: 0)
 		encoder.dispatchThreads(gridSize, threadsPerThreadgroup: groupSize)
 		encoder.endEncoding()

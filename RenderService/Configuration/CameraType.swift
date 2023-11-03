@@ -90,14 +90,14 @@ enum CameraType {
 				Lens(
 					centerpoint: simd_float3(0, 0, -Float($0.position + $0.thickness)),
 					radius: Float($0.frontRadius),
-					refractive_index: Float($0.refractiveIndex),
+					refractive_index: 1/Float($0.refractiveIndex),
 					concave: $0.frontIsConcave
 				),
 				Lens(
 					centerpoint: simd_float3(0, 0, -Float($0.position)),
 					radius: Float($0.backRadius),
-					refractive_index: 1/Float($0.refractiveIndex),
-					concave: $0.backIsConcave
+					refractive_index: Float($0.refractiveIndex),
+					concave: !$0.backIsConcave
 				)
 			]}
 		default:

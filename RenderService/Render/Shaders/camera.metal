@@ -129,7 +129,8 @@ ray thick_lens(uint2 screen_coords,
 	ray.max_distance = INFINITY;
 	
 	for (uint i = 0; i < lens_count; i++) {
-		ray = lens_refract(ray, lenses[i], random);
+		Lens lens = lenses[i];
+		ray = lens_refract(ray, lens, random);
 	}
 	
 	float3x3 camera_to_world = float3x3(camera_right,

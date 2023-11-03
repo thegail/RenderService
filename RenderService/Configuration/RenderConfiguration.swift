@@ -51,7 +51,7 @@ struct RenderConfiguration {
 		values.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
 		values.setConstantValue(&sampleScreenSize, type: .float2, withName: "sample_screen_size")
 		values.setConstantValue(&apertureDistance, type: .float, withName: "aperture_distance")
-		values.setConstantValue(&lensCount, type: .float, withName: "lens_count")
+		values.setConstantValue(&lensCount, type: .uint, withName: "lens_count")
 		values.setConstantValue(&cameraPosition, type: .float3, withName: "camera_position")
 		values.setConstantValue(&cameraRight, type: .float3, withName: "camera_right")
 		values.setConstantValue(&cameraUp, type: .float3, withName: "camera_up")
