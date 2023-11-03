@@ -58,6 +58,26 @@ struct Editor: View {
 								self.selectedItem = .lens(index: index)
 							}
 					}
+					Rectangle()
+						.fill(.mint.opacity(self.selectedItem == .screen ? 0.5 : 0.3))
+						.frame(width: 8, height: self.document.screenHeight * self.scaleFactor)
+						.position(
+							x: geometry.size.width - 25 - self.document.screenDistance * 50,
+							y: geometry.size.height / 2
+						)
+						.onTapGesture {
+							self.selectedItem = .screen
+						}
+					Rectangle()
+						.fill(.pink.opacity(self.selectedItem == .aperture ? 0.4 : 0.2))
+						.frame(width: 8, height: self.document.aperture * self.scaleFactor)
+						.position(
+							x: geometry.size.width - 25 - self.document.apertureDistance * 50,
+							y: geometry.size.height / 2
+						)
+						.onTapGesture {
+							self.selectedItem = .aperture
+						}
 				}
 				.frame(maxWidth: .infinity, maxHeight: .infinity)
 				HStack {
@@ -87,7 +107,7 @@ struct Editor: View {
 			
 			VStack(alignment: .trailing) {
 				VStack {
-					Text("Position")
+					Text("Lens Position")
 						.bold().bold()
 					HStack {
 						Slider(value: self.lens.position, in: 0...10)
