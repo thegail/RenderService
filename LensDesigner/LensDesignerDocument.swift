@@ -8,11 +8,21 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct LensDesignerDocument: FileDocument {
+struct LensDesignerDocument: Codable, FileDocument {
     var lenses: Array<LensModel>
+	var apertureDistance: Double
+	var aperture: Double
+	var screenWidth: Double
+	var screenHeight: Double
+	var screenDistance: Double
 
     init() {
 		self.lenses = [.default]
+		self.apertureDistance = 0.05
+		self.aperture = 3
+		self.screenWidth = 1
+		self.screenHeight = 1
+		self.screenDistance = 1
     }
 
 	static var readableContentTypes: [UTType] { [.lens] }
@@ -23,7 +33,7 @@ struct LensDesignerDocument: FileDocument {
         }
 		let decoder = PropertyListDecoder()
 		do {
-			self.lenses = try decoder.decode(Array<LensModel>.self, from: data)
+			self = try decoder.decode(Self.self, from: data)
 		} catch {
 			throw CocoaError(.fileReadCorruptFile)
 		}

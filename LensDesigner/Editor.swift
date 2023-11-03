@@ -7,9 +7,15 @@
 
 import SwiftUI
 
+enum SelectedItem: Hashable {
+	case screen
+	case aperture
+	case lens(index: Int)
+}
+
 struct Editor: View {
     @Binding var document: LensDesignerDocument
-	@State var selectedIndex: Int?
+	@State var selectedItem: SelectedItem?
 	@State var scaleFactor: Double = 50
 	let numberFormatter: NumberFormatter = {
 		let formatter = NumberFormatter()
@@ -19,7 +25,7 @@ struct Editor: View {
 		return formatter
 	}()
 	var lens: Binding<LensModel> {
-		if let index = self.selectedIndex {
+		if case .lens(index: let index) = self.selectedItem {
 			return self.$document.lenses[index]
 		} else {
 			return .constant(LensModel(position: 0, frontRadius: 0, backRadius: 0, frontIsConcave: false, backIsConcave: false, thickness: 0, refractiveIndex: 0))
@@ -42,14 +48,14 @@ struct Editor: View {
 							backIsConcave: lens.backIsConcave,
 							distance: lens.thickness * self.scaleFactor
 						)
-							.fill(.blue.opacity(self.selectedIndex == index ? 0.6 : 0.3))
+							.fill(.blue.opacity(self.selectedItem == .lens(index: index) ? 0.6 : 0.3))
 							.frame(width: 50, height: 100)
 							.position(
 								x: geometry.size.width - 25 - lens.position * 50,
 								y: geometry.size.height / 2
 							)
 							.onTapGesture {
-								self.selectedIndex = index
+								self.selectedItem = .lens(index: index)
 							}
 					}
 				}
@@ -63,10 +69,10 @@ struct Editor: View {
 						Image(systemName: "plus")
 					})
 					Button(action: {
-						guard let index = self.selectedIndex else {
+						guard case .lens(index: let index) = self.selectedItem else {
 							return
 						}
-						self.selectedIndex = nil
+						self.selectedItem = nil
 						self.document.lenses.remove(at: index)
 					}, label: {
 						Image(systemName: "trash.slash")
@@ -134,7 +140,7 @@ struct Editor: View {
 					}
 				}
 			}
-			.disabled(self.selectedIndex == nil)
+			.disabled(self.selectedItem == nil)
 			.frame(minWidth: 150, maxWidth: 200, maxHeight: .infinity, alignment: .top)
 			.padding()
 			.background(.gray.opacity(0.2))
