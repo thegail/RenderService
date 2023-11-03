@@ -91,14 +91,6 @@ float intersect_sphere(float3 ray_origin,
 	return solve_quadratic(b, c, concave);
 }
 
-struct Lens {
-	float3 centerpoint;
-	float radius;
-	float segment_length;
-	float refractive_index;
-	bool concave;
-};
-
 ray lens_refract(ray incident,
 				 Lens lens,
 				 float2 random) {
@@ -125,29 +117,20 @@ ray lens_refract(ray incident,
 constant float lens_distance [[function_constant(12)]];
 constant float2 sample_screen_size [[function_constant(13)]];
 constant float aperture_distance [[function_constant(14)]];
-constant float lens_thickness [[function_constant(15)]];
-ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant Uniforms& uniforms) {
-	Lens front;
-	front.centerpoint = float3(0, 0, -lens_thickness);
-	front.radius = 2;
-	front.segment_length = -1;
-	front.refractive_index = 1/1.52708;
-	front.concave = true;
-	
-	Lens back;
-	back.centerpoint = front.centerpoint + float3(0, 0, lens_thickness);
-	back.radius = 0.7;
-	back.segment_length = -1;
-	back.refractive_index = 1.52708;
-	back.concave = true;
-	
+constant uint lens_count [[function_constant(15)]];
+ray thick_lens(uint2 screen_coords,
+			   uint2 screen_size,
+			   float2 random,
+			   constant Uniforms& uniforms,
+			   constant Lens* lenses) {
 	ray ray;
 	ray.origin = sample_rectangle(sample_screen_size, screen_coords, screen_size, -lens_distance);
-	ray.direction = normalize(sample_aperture(-lens_thickness - aperture_distance, camera_aperture, random) - ray.origin);
+	ray.direction = normalize(sample_aperture(-aperture_distance, camera_aperture, random) - ray.origin);
 	ray.max_distance = INFINITY;
 	
-	ray = lens_refract(ray, front, random);
-	ray = lens_refract(ray, back, random);
+	for (uint i = 0; i < lens_count; i++) {
+		ray = lens_refract(ray, lenses[i], random);
+	}
 	
 	float3x3 camera_to_world = float3x3(camera_right,
 										camera_up,
@@ -158,13 +141,17 @@ ray thick_lens(uint2 screen_coords, uint2 screen_size, float2 random, constant U
 	return ray;
 }
 
-ray get_view_ray(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms& uniforms) {
+ray get_view_ray(uint2 screen_coords,
+				 uint2 screen_size,
+				 float2 r,
+				 constant Uniforms& uniforms,
+				 constant void* camera_buffer) {
 	if (camera_type == 0) {
 		return pinhole(screen_coords, screen_size, r, uniforms);
 	} else if (camera_type == 1) {
 		return thin_lens(screen_coords, screen_size, r, uniforms);
 	} else if (camera_type == 2) {
-		return thick_lens(screen_coords, screen_size, r, uniforms);
+		return thick_lens(screen_coords, screen_size, r, uniforms, (constant Lens*) camera_buffer);
 	} else {
 		ray ray;
 		return ray;

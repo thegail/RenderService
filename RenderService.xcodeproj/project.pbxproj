@@ -23,7 +23,7 @@
 		32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E5C2ABE32D900F5BDD3 /* absorption.metal */; };
 		32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E602ABE33FF00F5BDD3 /* sample.metal */; };
 		32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C762AF2BE0A0068F655 /* Camera.swift */; };
-		32CC5C792AF2C7A50068F655 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C782AF2C7A50068F655 /* Lens.swift */; };
+		32CC5C792AF2C7A50068F655 /* CameraType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C782AF2C7A50068F655 /* CameraType.swift */; };
 		32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */; };
 		32CC5C9A2AF2D0490068F655 /* LensDesignerDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C992AF2D0490068F655 /* LensDesignerDocument.swift */; };
 		32CC5C9C2AF2D0490068F655 /* Editor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C9B2AF2D0490068F655 /* Editor.swift */; };
@@ -68,7 +68,7 @@
 		32997E5C2ABE32D900F5BDD3 /* absorption.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = absorption.metal; sourceTree = "<group>"; };
 		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
 		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		32CC5C782AF2C7A50068F655 /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		32CC5C782AF2C7A50068F655 /* CameraType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraType.swift; sourceTree = "<group>"; };
 		32CC5C902AF2CFE00068F655 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		32CC5C952AF2D0490068F655 /* LensDesigner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LensDesigner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensDesignerApp.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
-				32CC5C782AF2C7A50068F655 /* Lens.swift */,
+				32CC5C782AF2C7A50068F655 /* CameraType.swift */,
 				32CC5C762AF2BE0A0068F655 /* Camera.swift */,
 				32CC5CAF2AF4B4B70068F655 /* ThickLensFile.swift */,
 			);
@@ -316,7 +316,7 @@
 				32997E412ABBF5B200F5BDD3 /* RenderConfiguration.swift in Sources */,
 				32997E362ABB8C9D00F5BDD3 /* RenderError.swift in Sources */,
 				32997E4E2ABC07BA00F5BDD3 /* Cube.swift in Sources */,
-				32CC5C792AF2C7A50068F655 /* Lens.swift in Sources */,
+				32CC5C792AF2C7A50068F655 /* CameraType.swift in Sources */,
 				32997E5D2ABE32D900F5BDD3 /* absorption.metal in Sources */,
 				32997E432ABBF73D00F5BDD3 /* render.metal in Sources */,
 				32997E592ABE012700F5BDD3 /* camera.metal in Sources */,

@@ -56,11 +56,12 @@ kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 						 uint2 screen_size [[threads_per_grid]],
 						 constant Uniforms& uniforms [[buffer(0)]],
 						 primitive_acceleration_structure acceleration_structure [[buffer(1)]],
+						 constant void* camera_buffer [[buffer(2)]],
 						 texture2d<float, access::read_write> output) {
 	
 	uint offset = hash_position(screen_coords, screen_size) + uniforms.frame;
 	float2 view_r = float2(halton(offset, 0), halton(offset, 1));
-	ray ray = get_view_ray(screen_coords, screen_size, view_r, uniforms);
+	ray ray = get_view_ray(screen_coords, screen_size, view_r, uniforms, camera_buffer);
 
 	intersector<triangle_data> i;
 	i.assume_geometry_type(geometry_type::triangle);

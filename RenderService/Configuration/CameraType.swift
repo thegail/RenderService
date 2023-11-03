@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Lens {
+enum CameraType {
 	case pinhole
 	case thinLens(ThinLens)
 	case thickLens(ThickLens)
@@ -22,7 +22,7 @@ enum Lens {
 		let lensDistance: Float
 		let sampleScreenSize: SIMD2<Float>
 		let apertureDistance: Float
-		let lensThickness: Float
+		let lenses: Array<ThickLensFile.Lens>
 	}
 	
 	var cameraTypeID: UInt8 {
@@ -83,12 +83,25 @@ enum Lens {
 		}
 	}
 	
-	var thickness: Float {
+	var lenses: Array<Lens> {
 		switch self {
 		case .thickLens(let lens):
-			return lens.lensThickness
+			return lens.lenses.flatMap { [
+				Lens(
+					centerpoint: simd_float3(0, 0, -Float($0.position)),
+					radius: Float($0.frontRadius),
+					refractive_index: Float($0.refractiveIndex),
+					concave: $0.frontIsConcave
+				),
+				Lens(
+					centerpoint: simd_float3(0, 0, -Float($0.position)),
+					radius: Float($0.backRadius),
+					refractive_index: 1/Float($0.refractiveIndex),
+					concave: $0.backIsConcave
+				)
+			]}
 		default:
-			return 0
+			return []
 		}
 	}
 }

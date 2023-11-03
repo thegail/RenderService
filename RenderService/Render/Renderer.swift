@@ -16,6 +16,7 @@ class Renderer {
 	let targetTexture: MTLTexture
 	let uniformsBuffer: MTLBuffer
 	let accelerationStructure: MTLAccelerationStructure
+	let lensBuffer: MTLBuffer
 	var uniforms: Uniforms
 	
 	init(device: RenderDevice, config: RenderConfiguration) throws {
@@ -28,6 +29,7 @@ class Renderer {
 		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
 		let (vertices, triangles) = generateTestScene()
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
+		self.lensBuffer = try device.makeDataBuffer(data: config.lens.lenses)
 		self.uniforms = uniforms
 	}
 	

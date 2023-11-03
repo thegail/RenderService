@@ -24,4 +24,11 @@ struct Triangle {
 	unsigned char face_div;
 };
 
+struct Lens {
+	float3 centerpoint;
+	float radius;
+	float refractive_index;
+	bool concave;
+};
+
 #endif /* uniforms_h */

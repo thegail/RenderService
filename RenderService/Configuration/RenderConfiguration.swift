@@ -13,19 +13,19 @@ struct RenderConfiguration {
 	let height: Int
 	let maxBounces: Int
 	let camera: Camera
-	let lens: Lens
+	let lens: CameraType
 	
 	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: ThickLensFile) {
 		self.width = width
 		self.height = height
 		self.maxBounces = maxBounces
 		self.camera = camera
-		self.lens = .thickLens(Lens.ThickLens(
+		self.lens = .thickLens(CameraType.ThickLens(
 			aperture: Float(lensFile.aperture),
 			lensDistance: Float(lensFile.screenDistance),
 			sampleScreenSize: SIMD2(Float(lensFile.screenWidth), Float(lensFile.screenHeight)),
 			apertureDistance: Float(lensFile.apertureDistance),
-			lensThickness: 1
+			lenses: lensFile.lenses
 		))
 	}
 	
@@ -37,7 +37,7 @@ struct RenderConfiguration {
 		var focusDistance: Float = self.lens.focusDistance
 		var sampleScreenSize: SIMD2<Float> = self.lens.sampleScreenSize
 		var apertureDistance: Float = self.lens.apertureDistance
-		var lensThickness: Float = self.lens.thickness
+		var lensCount = UInt32(self.lens.lenses.count)
 		var cameraPosition = self.camera.position
 		let cameraMatrix = self.camera.rotationMatrix
 		var cameraRight = cameraMatrix.columns.0
@@ -51,7 +51,7 @@ struct RenderConfiguration {
 		values.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
 		values.setConstantValue(&sampleScreenSize, type: .float2, withName: "sample_screen_size")
 		values.setConstantValue(&apertureDistance, type: .float, withName: "aperture_distance")
-		values.setConstantValue(&lensThickness, type: .float, withName: "lens_thickness")
+		values.setConstantValue(&lensCount, type: .float, withName: "lens_count")
 		values.setConstantValue(&cameraPosition, type: .float3, withName: "camera_position")
 		values.setConstantValue(&cameraRight, type: .float3, withName: "camera_right")
 		values.setConstantValue(&cameraUp, type: .float3, withName: "camera_up")
