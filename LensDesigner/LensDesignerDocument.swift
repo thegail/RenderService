@@ -42,7 +42,7 @@ struct LensDesignerDocument: Codable, FileDocument {
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         let encoder = PropertyListEncoder()
 		encoder.outputFormat = .binary
-		let data = try encoder.encode(self.lenses)
+		let data = try encoder.encode(self)
         return .init(regularFileWithContents: data)
     }
 }
