@@ -106,58 +106,110 @@ struct Editor: View {
 			.frame(minWidth: 400, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
 			
 			VStack(alignment: .trailing) {
-				VStack {
-					Text("Lens Position")
-						.bold().bold()
+				switch self.selectedItem {
+				case .lens(_):
+					VStack {
+						Text("Lens Position")
+							.bold().bold()
+						HStack {
+							Slider(value: self.lens.position, in: 0...10)
+							TextField("", value: self.lens.position, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+					}
+					Divider()
+					VStack {
+						Text("Front Radius")
+							.bold().bold()
+						HStack {
+							Slider(value: self.lens.frontRadius, in: 0...10)
+							TextField("", value: self.lens.frontRadius, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+						Picker(selection: self.lens.frontIsConcave, content: {
+							Text("Convex").tag(false)
+							Text("Concave").tag(true)
+						}, label: {})
+					}
+					Divider()
+					VStack {
+						Text("Back Radius")
+							.bold().bold()
+						HStack {
+							Slider(value: self.lens.backRadius, in: 0...10)
+							TextField("", value: self.lens.backRadius, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+						Picker(selection: self.lens.backIsConcave, content: {
+							Text("Convex").tag(false)
+							Text("Concave").tag(true)
+						}, label: {})
+					}
+					Divider()
+					VStack(alignment: .trailing) {
+						Text("Thickness")
+							.frame(maxWidth: .infinity)
+							.bold().bold()
+						HStack {
+							Slider(value: self.lens.thickness, in: 0...1)
+							TextField("", value: self.lens.thickness, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+						HStack {
+							Text("Refractive Index")
+							TextField("", value: self.lens.refractiveIndex, format: .number)
+								.frame(width: 40)
+						}
+					}
+				case .screen:
+					VStack {
+						Text("Screen Position")
+							.bold().bold()
+						HStack {
+							Slider(value: self.$document.screenDistance, in: 0...10)
+							TextField("", value: self.$document.screenDistance, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+					}
+					Divider()
+					VStack {
+						Text("Dimensions")
+							.bold().bold()
+						HStack {
+							Text("Width")
+							TextField("", value: self.$document.screenWidth, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+						.frame(maxWidth: .infinity, alignment: .trailing)
+						HStack {
+							Text("Height")
+							TextField("", value: self.$document.screenHeight, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+						.frame(maxWidth: .infinity, alignment: .trailing)
+					}
+				case .aperture:
+					VStack {
+						Text("Aperture Position")
+							.bold().bold()
+						HStack {
+							Slider(value: self.$document.apertureDistance, in: 0...10)
+							TextField("", value: self.$document.apertureDistance, formatter: self.numberFormatter)
+								.frame(width: 40)
+						}
+					}
+					Divider()
 					HStack {
-						Slider(value: self.lens.position, in: 0...10)
-						TextField("", value: self.lens.position, formatter: self.numberFormatter)
+						Text("Aperture")
+							.bold().bold()
+						TextField("", value: self.$document.aperture, formatter: self.numberFormatter)
 							.frame(width: 40)
 					}
-				}
-				Divider()
-				VStack {
-					Text("Front Radius")
-						.bold().bold()
-					HStack {
-						Slider(value: self.lens.frontRadius, in: 0...10)
-						TextField("", value: self.lens.frontRadius, formatter: self.numberFormatter)
-							.frame(width: 40)
-					}
-					Picker(selection: self.lens.frontIsConcave, content: {
-						Text("Convex").tag(false)
-						Text("Concave").tag(true)
-					}, label: {})
-				}
-				Divider()
-				VStack {
-					Text("Back Radius")
-						.bold().bold()
-					HStack {
-						Slider(value: self.lens.backRadius, in: 0...10)
-						TextField("", value: self.lens.backRadius, formatter: self.numberFormatter)
-							.frame(width: 40)
-					}
-					Picker(selection: self.lens.backIsConcave, content: {
-						Text("Convex").tag(false)
-						Text("Concave").tag(true)
-					}, label: {})
-				}
-				Divider()
-				VStack(alignment: .trailing) {
-					Text("Thickness")
-						.frame(maxWidth: .infinity)
-						.bold().bold()
-					HStack {
-						Slider(value: self.lens.thickness, in: 0...1)
-						TextField("", value: self.lens.thickness, formatter: self.numberFormatter)
-							.frame(width: 40)
-					}
-					HStack {
-						Text("Refractive Index")
-						TextField("", value: self.lens.refractiveIndex, format: .number)
-							.frame(width: 40)
-					}
+					.frame(maxWidth: .infinity, alignment: .trailing)
+				case nil:
+					Text("Select an item to view attributes")
+						.font(.callout)
+						.frame(maxHeight: .infinity, alignment: .center)
 				}
 			}
 			.disabled(self.selectedItem == nil)
