@@ -51,7 +51,7 @@ struct Editor: View {
 							.fill(.blue.opacity(self.selectedItem == .lens(index: index) ? 0.6 : 0.3))
 							.frame(width: 50, height: 100)
 							.position(
-								x: geometry.size.width - 25 - lens.position * 50,
+								x: geometry.size.width - 50 - lens.position * 50,
 								y: geometry.size.height / 2
 							)
 							.onTapGesture {
@@ -62,7 +62,7 @@ struct Editor: View {
 						.fill(.mint.opacity(self.selectedItem == .screen ? 0.5 : 0.3))
 						.frame(width: 8, height: self.document.screenHeight * self.scaleFactor)
 						.position(
-							x: geometry.size.width - 25 - self.document.screenDistance * 50,
+							x: geometry.size.width - 29 - self.document.screenDistance * 50,
 							y: geometry.size.height / 2
 						)
 						.onTapGesture {
@@ -72,7 +72,7 @@ struct Editor: View {
 						.fill(.pink.opacity(self.selectedItem == .aperture ? 0.4 : 0.2))
 						.frame(width: 8, height: self.document.aperture * self.scaleFactor)
 						.position(
-							x: geometry.size.width - 25 - self.document.apertureDistance * 50,
+							x: geometry.size.width - 29 - self.document.apertureDistance * 50,
 							y: geometry.size.height / 2
 						)
 						.onTapGesture {

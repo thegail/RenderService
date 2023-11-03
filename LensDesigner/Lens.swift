@@ -15,17 +15,17 @@ struct Lens: Shape {
 	let distance: CGFloat
 	
 	func path(in rect: CGRect) -> Path {
-		let signedFrontRadius = (self.frontIsConcave ? -1 : 1) * self.frontRadius
-		let frontCenter: CGFloat
-		if self.frontIsConcave {
-			let startX = sqrt(self.frontRadius * self.frontRadius - rect.height * rect.height / 4)
-			frontCenter = rect.minX - startX
+		let signedBackRadius = (self.backIsConcave ? -1 : 1) * self.backRadius
+		let backCenter: CGFloat
+		if self.backIsConcave {
+			let endX = sqrt(self.backRadius * self.backRadius - rect.height * rect.height / 4)
+			backCenter = rect.maxX + endX
 		} else {
-			frontCenter = rect.minX + self.frontRadius
+			backCenter = rect.maxX - self.backRadius
 		}
 		
-		let signedBackRadius = (self.backIsConcave ? -1 : 1) * self.backRadius
-		let backCenter = frontCenter - signedFrontRadius + self.distance - signedBackRadius
+		let signedFrontRadius = (self.frontIsConcave ? -1 : 1) * self.frontRadius
+		let frontCenter = backCenter + signedBackRadius - self.distance + signedFrontRadius
 		
 		let frontEllipse = CGPath(ellipseIn: CGRect(
 			x: frontCenter - frontRadius,

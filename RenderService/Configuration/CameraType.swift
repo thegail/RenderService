@@ -88,7 +88,7 @@ enum CameraType {
 		case .thickLens(let lens):
 			return lens.lenses.flatMap { [
 				Lens(
-					centerpoint: simd_float3(0, 0, -Float($0.position)),
+					centerpoint: simd_float3(0, 0, -Float($0.position + $0.thickness)),
 					radius: Float($0.frontRadius),
 					refractive_index: Float($0.refractiveIndex),
 					concave: $0.frontIsConcave
