@@ -29,7 +29,7 @@ class Renderer {
 		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
 		let (vertices, triangles) = generateTestScene()
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
-		self.lensBuffer = try device.makeDataBuffer(data: config.lens.lenses)
+		self.lensBuffer = try device.makeDataBuffer(data: config.cameraType.lensData)
 		self.uniforms = uniforms
 	}
 	

@@ -5,7 +5,7 @@
 //  Created by NUS17468-11-thegail on 11/1/23.
 //
 
-import Foundation
+import Metal
 
 struct Camera {
 	let position: SIMD3<Float>
@@ -39,5 +39,17 @@ struct Camera {
 	
 	var rotationMatrix: simd_float3x3 {
 		self.rollMatrix * self.pitchMatrix * self.yawMatrix
+	}
+	
+	func setFunctionConstants(_ constants: MTLFunctionConstantValues) {
+		var position = self.position
+		let matrix = self.rotationMatrix
+		var cameraRight = matrix.columns.0
+		var cameraUp = matrix.columns.1
+		var cameraForward = matrix.columns.2
+		constants.setConstantValue(&position, type: .float3, withName: "camera_position")
+		constants.setConstantValue(&cameraRight, type: .float3, withName: "camera_right")
+		constants.setConstantValue(&cameraUp, type: .float3, withName: "camera_up")
+		constants.setConstantValue(&cameraForward, type: .float3, withName: "camera_forward")
 	}
 }

@@ -5,7 +5,7 @@
 //  Created by NUS17468-11-thegail on 11/1/23.
 //
 
-import Foundation
+import Metal
 
 enum CameraType {
 	case pinhole
@@ -22,68 +22,10 @@ enum CameraType {
 		let lensDistance: Float
 		let sampleScreenSize: SIMD2<Float>
 		let apertureDistance: Float
-		let lenses: Array<ThickLensFile.Lens>
+		let lenses: Array<LensFile.Lens>
 	}
 	
-	var cameraTypeID: UInt8 {
-		switch self {
-		case .pinhole:
-			return 0
-		case .thinLens(_):
-			return 1
-		case .thickLens(_):
-			return 2
-		}
-	}
-	
-	var aperture: Float {
-		switch self {
-		case .thinLens(let lens):
-			return lens.aperture
-		case .thickLens(let lens):
-			return lens.aperture
-		default:
-			return 0
-		}
-	}
-	
-	var lensDistance: Float {
-		switch self {
-		case .thickLens(let lens):
-			return lens.lensDistance
-		default:
-			return 0
-		}
-	}
-	
-	var focusDistance: Float {
-		switch self {
-		case .thinLens(let lens):
-			return lens.focusDistance
-		default:
-			return 0
-		}
-	}
-	
-	var sampleScreenSize: SIMD2<Float> {
-		switch self {
-		case .thickLens(let lens):
-			return lens.sampleScreenSize
-		default:
-			return SIMD2(repeating: 0)
-		}
-	}
-	
-	var apertureDistance: Float {
-		switch self {
-		case .thickLens(let lens):
-			return lens.apertureDistance
-		default:
-			return 0
-		}
-	}
-	
-	var lenses: Array<Lens> {
+	var lensData: Array<Lens> {
 		switch self {
 		case .thickLens(let lens):
 			return lens.lenses.flatMap { [
@@ -102,6 +44,34 @@ enum CameraType {
 			]}
 		default:
 			return []
+		}
+	}
+	
+	func setFunctionConstants(_ constants: MTLFunctionConstantValues) {
+		switch self {
+		case .pinhole:
+			var cameraType: UInt8 = 0
+			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
+		case .thinLens(let lens):
+			var cameraType: UInt8 = 1
+			var aperture = lens.aperture
+			var focusDistance = lens.focusDistance
+			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
+			constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
+			constants.setConstantValue(&focusDistance, type: .float, withName: "focus_distance")
+		case .thickLens(let lens):
+			var cameraType: UInt8 = 2
+			var aperture = lens.aperture
+			var apertureDistance = lens.apertureDistance
+			var sampleScreenSize = lens.sampleScreenSize
+			var lensDistance = lens.lensDistance
+			var lensCount = lens.lenses.count
+			constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
+			constants.setConstantValue(&aperture, type: .float, withName: "camera_aperture")
+			constants.setConstantValue(&apertureDistance, type: .float, withName: "aperture_distance")
+			constants.setConstantValue(&sampleScreenSize, type: .float2, withName: "sample_screen_size")
+			constants.setConstantValue(&lensDistance, type: .float, withName: "lens_distance")
+			constants.setConstantValue(&lensCount, type: .uint, withName: "lens_count")
 		}
 	}
 }

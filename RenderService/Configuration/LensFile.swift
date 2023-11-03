@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ThickLensFile: Codable {
+struct LensFile: Codable {
 	var lenses: Array<Lens>
 	var apertureDistance: Double
 	var aperture: Double

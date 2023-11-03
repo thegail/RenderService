@@ -32,7 +32,7 @@
 		32CC5CAA2AF3F9790068F655 /* LensModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CA92AF3F9790068F655 /* LensModel.swift */; };
 		32CC5CAC2AF4191F0068F655 /* UTType+lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */; };
 		32CC5CAE2AF4A9940068F655 /* ControlButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAD2AF4A9940068F655 /* ControlButtonStyle.swift */; };
-		32CC5CB02AF4B4B70068F655 /* ThickLensFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAF2AF4B4B70068F655 /* ThickLensFile.swift */; };
+		32CC5CB02AF4B4B70068F655 /* LensFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5CAF2AF4B4B70068F655 /* LensFile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,7 +81,7 @@
 		32CC5CA92AF3F9790068F655 /* LensModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensModel.swift; sourceTree = "<group>"; };
 		32CC5CAB2AF4191F0068F655 /* UTType+lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UTType+lens.swift"; sourceTree = "<group>"; };
 		32CC5CAD2AF4A9940068F655 /* ControlButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButtonStyle.swift; sourceTree = "<group>"; };
-		32CC5CAF2AF4B4B70068F655 /* ThickLensFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThickLensFile.swift; sourceTree = "<group>"; };
+		32CC5CAF2AF4B4B70068F655 /* LensFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensFile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +192,7 @@
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
 				32CC5C782AF2C7A50068F655 /* CameraType.swift */,
 				32CC5C762AF2BE0A0068F655 /* Camera.swift */,
-				32CC5CAF2AF4B4B70068F655 /* ThickLensFile.swift */,
+				32CC5CAF2AF4B4B70068F655 /* LensFile.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -305,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */,
-				32CC5CB02AF4B4B70068F655 /* ThickLensFile.swift in Sources */,
+				32CC5CB02AF4B4B70068F655 /* LensFile.swift in Sources */,
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
 				32997E562ABCC99000F5BDD3 /* post.metal in Sources */,
