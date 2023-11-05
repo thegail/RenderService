@@ -81,7 +81,7 @@ kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 		float3 intersection_point = ray.origin + ray.direction * intersection.distance;
 		Triangle triangle = *(const device Triangle*) intersection.primitive_data;
 		
-		accumulated_emission += accumulated_absorption * calculate_emission(triangle);
+		accumulated_emission += accumulated_absorption * calculate_emission(triangle, intersection.triangle_barycentric_coord);
 		float2 sample_r = float2(halton(offset, 2 + bounce * 3 + 0), halton(offset, 2 + bounce * 3 + 1));
 		float3 new_direction = sample_direction(triangle, sample_r);
 		accumulated_absorption *= calculate_absorption(triangle, intersection.triangle_barycentric_coord);
