@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import MetalKit
 
 class RenderDevice {
 	private let inner: MTLDevice
@@ -195,6 +196,58 @@ class RenderDevice {
 		copyCommandBuffer.commit()
 		copyCommandBuffer.waitUntilCompleted()
 		return compactedStructure
+	}
+	
+	func makeResourcesHeap(urls: Array<URL>) throws -> (MTLHeap, Array<MTLTexture>) {
+		let loader = MTKTextureLoader(device: self.inner)
+		var textures: Array<MTLTexture> = []
+		do {
+			for url in urls {
+				let texture = try loader.newTexture(URL: url)
+				textures.append(texture)
+			}
+		} catch {
+			throw RenderError.textureLoading
+		}
+		
+		let heapSize = textures.map { $0.allocatedSize }.reduce(0, +)
+		let descriptor = MTLHeapDescriptor()
+		descriptor.size = heapSize
+		descriptor.storageMode = .private
+		descriptor.type = .automatic
+		
+		guard let heap = self.inner.makeHeap(descriptor: descriptor) else {
+			throw RenderError.heap
+		}
+		
+		var newTextures: Array<MTLTexture> = []
+		for texture in textures {
+			let newDescriptor = MTLTextureDescriptor()
+			newDescriptor.width = texture.width
+			newDescriptor.height = texture.height
+			newDescriptor.textureType = .type2D
+			newDescriptor.pixelFormat = .bgra8Unorm
+			newDescriptor.storageMode = .private
+			newDescriptor.usage = .shaderRead
+			guard let texture = heap.makeTexture(descriptor: newDescriptor) else {
+				throw RenderError.resourceTexture
+			}
+			
+			newTextures.append(texture)
+		}
+		
+		let commandBuffer = try self.makeCommandBuffer()
+		guard let encoder = commandBuffer.makeBlitCommandEncoder() else {
+			throw RenderError.blitEncoder
+		}
+		for (old, new) in zip(textures, newTextures) {
+			encoder.copy(from: old, to: new)
+		}
+		encoder.endEncoding()
+		commandBuffer.commit()
+		commandBuffer.waitUntilCompleted()
+		
+		return (heap, newTextures)
 	}
 	
 	func startCapture() {

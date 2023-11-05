@@ -7,7 +7,28 @@
 
 #include "trace.h"
 
-float3 calculate_absorption(Triangle triangle) {
-	float3 normal_color = triangle.normal * 0.5 + 0.5;
-	return normal_color;
+float2 calc_tex_coords(float2 b_coords, uchar face_div) {
+	float3 point_coefficients = float3(1 - b_coords.x - b_coords.y, b_coords);
+	
+	float3x2 triangle_points;
+	if (face_div == 0) {
+		triangle_points = float3x2(float2(0, 0), float2(1, 0), float2(0, 1));
+	} else {
+		triangle_points = float3x2(float2(1, 1), float2(0, 1), float2(1, 0));
+	}
+	
+	return triangle_points * point_coefficients;
+}
+
+float3 calculate_absorption(Triangle triangle, float2 triangle_coords) {
+	float3 color;
+	if (triangle.primitive_flags & 0b10) {
+		float2 uv = calc_tex_coords(triangle_coords, triangle.primitive_flags & 0b1);
+		constexpr sampler s(coord::normalized, address::clamp_to_zero, filter::linear);
+		color = triangle.texture.sample(s, uv).xyz;
+	} else {
+		color = triangle.normal * 0.5 + 0.5;
+	}
+	
+	return color;
 }

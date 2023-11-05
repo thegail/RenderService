@@ -8,9 +8,12 @@
 #ifndef uniforms_h
 #define uniforms_h
 
-#ifndef __METAL_VERSION__
+#ifdef __METAL_VERSION__
+#define TEXTURE metal::texture2d<float, metal::access::sample>
+#else
 #include <simd/simd.h>
 #define float3 simd_float3
+#define TEXTURE uint64_t
 #endif /* __METAL_VERSION__ */
 
 struct Uniforms {
@@ -19,9 +22,11 @@ struct Uniforms {
 
 struct Triangle {
 	float3 normal;
+	TEXTURE texture;
+	// BYTE 0 FROM LSB: face_div
+	// BYTE 1 FROM LSB: has_texture
+	unsigned char primitive_flags;
 	float3 color;
-	uint tex_id;
-	unsigned char face_div;
 };
 
 struct Lens {

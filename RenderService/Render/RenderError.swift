@@ -11,5 +11,6 @@ enum RenderError: LocalizedError {
 	case device, commandQueue, commandBuffer, computePipeline
 	case library, targetTexture, commandEncoder, uniformsBuffer
 	case inspectionTexture, blitEncoder, dataBuffer
-	case accelerationStructure
+	case accelerationStructure, resourceTexture, textureLoading
+	case heap
 }

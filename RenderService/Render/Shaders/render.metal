@@ -61,7 +61,6 @@ kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 						 primitive_acceleration_structure acceleration_structure [[buffer(1)]],
 						 constant void* camera_buffer [[buffer(2), function_constant(has_camera_buffer)]],
 						 texture2d<float, access::read_write> output) {
-	
 	uint offset = hash_position(screen_coords, screen_size) + uniforms.frame;
 	float2 view_r = float2(halton(offset, 0), halton(offset, 1));
 	ray ray = get_view_ray(screen_coords, screen_size, view_r, uniforms, camera_buffer);
@@ -85,7 +84,7 @@ kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 		accumulated_emission += accumulated_absorption * calculate_emission(triangle);
 		float2 sample_r = float2(halton(offset, 2 + bounce * 3 + 0), halton(offset, 2 + bounce * 3 + 1));
 		float3 new_direction = sample_direction(triangle, sample_r);
-		accumulated_absorption *= calculate_absorption(triangle);
+		accumulated_absorption *= calculate_absorption(triangle, intersection.triangle_barycentric_coord);
 		
 		float cont_prob = max3(accumulated_absorption.x, accumulated_absorption.y, accumulated_absorption.z);
 		if (halton(offset, 2 + bounce * 3 + 2) > cont_prob) {

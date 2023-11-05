@@ -8,6 +8,8 @@
 import Foundation
 import Metal
 
+let testURLs = [URL(filePath: "/Users/thegail/Desktop/oak_log.png"), URL(filePath: "/Users/thegail/Desktop/oak_log_top.png"), URL(filePath: "/Users/thegail/Desktop/glowstone.png")]
+
 class Renderer {
 	let config: RenderConfiguration
 	let device: RenderDevice
@@ -15,8 +17,10 @@ class Renderer {
 	let postPipeline: MTLComputePipelineState
 	let targetTexture: MTLTexture
 	let uniformsBuffer: MTLBuffer
-	let accelerationStructure: MTLAccelerationStructure
 	let lensBuffer: MTLBuffer?
+	let resourcesHeap: MTLHeap
+	let resources: Array<MTLTexture>
+	let accelerationStructure: MTLAccelerationStructure
 	var uniforms: Uniforms
 	
 	init(device: RenderDevice, config: RenderConfiguration) throws {
@@ -27,13 +31,14 @@ class Renderer {
 		self.targetTexture = try device.makeTargetTexture(width: config.width, height: config.height)
 		let uniforms = Uniforms(frame: 0)
 		self.uniformsBuffer = try device.makeUniformsBuffer(data: uniforms)
-		let (vertices, triangles) = generateTestScene()
-		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
 		if case .thickLens(_) = config.cameraType {
 			self.lensBuffer = try device.makeDataBuffer(data: config.cameraType.lensData)
 		} else {
 			self.lensBuffer = nil
 		}
+		(self.resourcesHeap, self.resources) = try device.makeResourcesHeap(urls: testURLs)
+		let (vertices, triangles) = generateTestScene(textureIDs: self.resources.map { $0.gpuResourceID._impl })
+		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
 		self.uniforms = uniforms
 	}
 	
@@ -58,6 +63,7 @@ class Renderer {
 		encoder.setAccelerationStructure(self.accelerationStructure, bufferIndex: 1)
 		encoder.setBuffer(self.lensBuffer, offset: 0, index: 2)
 		encoder.setTexture(self.targetTexture, index: 0)
+		encoder.useHeap(self.resourcesHeap)
 		encoder.dispatchThreads(gridSize, threadsPerThreadgroup: groupSize)
 		encoder.endEncoding()
 		

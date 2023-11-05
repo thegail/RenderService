@@ -14,13 +14,15 @@ class Cube {
 	let scale: SIMD3<Float>
 	let faces: Set<Face>
 	let inverted: Bool
+	let textureID: UInt64?
 	
-	init(position: SIMD3<Float> = SIMD3<Float>(repeating: 0), rotation: Float = 0, scale: SIMD3<Float> = SIMD3<Float>(repeating: 1), faces: Set<Face> = [.up, .down, .left, .right, .front, .back], inverted: Bool = false) {
+	init(position: SIMD3<Float> = SIMD3<Float>(repeating: 0), rotation: Float = 0, scale: SIMD3<Float> = SIMD3<Float>(repeating: 1), faces: Set<Face> = [.up, .down, .left, .right, .front, .back], inverted: Bool = false, textureID: UInt64? = nil) {
 		self.position = position
 		self.rotation = rotation
 		self.scale = scale
 		self.faces = faces
 		self.inverted = inverted
+		self.textureID = textureID
 	}
 	
 	var rotationMatrix: simd_float3x3 {
@@ -62,7 +64,8 @@ class Cube {
 		}
 		
 		let color = self.scale.y == 1 ? SIMD3<Float>(repeating: 1) : SIMD3<Float>(repeating: 0.5)
-		return [Triangle(normal: normal, color: color, tex_id: 0, face_div: 0), Triangle(normal: normal, color: color, tex_id: 0, face_div: 1)]
+		let textureFlag: UInt8 = self.textureID == nil ? 0 : 0b10
+		return [Triangle(normal: normal, texture: self.textureID ?? 0, primitive_flags: textureFlag, color: color), Triangle(normal: normal, texture: self.textureID ?? 0, primitive_flags: textureFlag + 0b1, color: color)]
 	}
 	
 	private static func faceVertices(face: Face) -> Array<SIMD3<Float>> {
