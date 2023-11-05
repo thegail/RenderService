@@ -28,7 +28,7 @@ enum CameraType {
 	var lensData: Array<Lens> {
 		switch self {
 		case .thickLens(let lens):
-			return lens.lenses.flatMap { [
+			return lens.lenses.sorted(by: { $0.position > $1.position }).flatMap { [
 				Lens(
 					centerpoint: simd_float3(0, 0, -Float($0.position + $0.thickness)),
 					radius: Float($0.frontRadius),

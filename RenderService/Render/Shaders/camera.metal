@@ -96,7 +96,8 @@ ray lens_refract(ray incident,
 	ray ray;
 	ray.direction = float3(0);
 	
-	float3 sphere_center = lens.centerpoint - float3(0, 0, lens.radius);
+	float concavity = lens.concave ? -1 : 1;
+	float3 sphere_center = lens.centerpoint + concavity * float3(0, 0, lens.radius);
 	float intersection_distance = intersect_sphere(incident.origin,
 												   incident.direction,
 												   sphere_center,
@@ -104,8 +105,7 @@ ray lens_refract(ray incident,
 												   lens.concave);
 	if (isnan(intersection_distance) || intersection_distance < 0) return ray;
 	float3 intersection_point = incident.origin + incident.direction * intersection_distance;
-	float normal_scalar = lens.concave ? -1 : 1;
-	float3 normal = normal_scalar * normalize(intersection_point - sphere_center);
+	float3 normal = concavity * normalize(intersection_point - sphere_center);
 	float3 new_direction = refract(incident.direction, normal, lens.refractive_index);
 	
 	ray.origin = intersection_point;
