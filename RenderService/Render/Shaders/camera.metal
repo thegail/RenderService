@@ -18,8 +18,7 @@ ray pinhole(uint2 screen_coords, uint2 screen_size, float2 r, constant Uniforms&
 	pixel += r;
 	
 	float2 uv = pixel / float2(screen_size.x);
-	uv = uv * 2 - 1.0f;
-	uv.y *= -1;
+	uv = uv * -2 + 1.0f;
 	
 	ray ray;
 	ray.origin = camera_position;
