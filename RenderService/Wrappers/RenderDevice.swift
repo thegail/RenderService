@@ -198,12 +198,12 @@ class RenderDevice {
 		return compactedStructure
 	}
 	
-	func makeResourcesHeap(urls: Array<URL>) throws -> (MTLHeap, Array<MTLTexture>) {
+	func makeResourcesHeap(textures descriptors: Array<TextureDescriptor>) throws -> (MTLHeap, Dictionary<UUID, MTLTexture>) {
 		let loader = MTKTextureLoader(device: self.inner)
 		var textures: Array<MTLTexture> = []
 		do {
-			for url in urls {
-				let texture = try loader.newTexture(URL: url)
+			for descriptor in descriptors {
+				let texture = try loader.newTexture(URL: descriptor.file)
 				textures.append(texture)
 			}
 		} catch {
@@ -247,7 +247,8 @@ class RenderDevice {
 		commandBuffer.commit()
 		commandBuffer.waitUntilCompleted()
 		
-		return (heap, newTextures)
+		let ids = descriptors.map { $0.id }
+		return (heap, Dictionary(uniqueKeysWithValues: zip(ids, newTextures)))
 	}
 	
 	func startCapture() {

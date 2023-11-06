@@ -14,16 +14,18 @@ struct RenderConfiguration {
 	let maxBounces: Int
 	let camera: Camera
 	let cameraType: CameraType
+	let textures: Array<TextureDescriptor>
 	
-	init(width: Int, height: Int, maxBounces: Int, camera: Camera, cameraType: CameraType) {
+	init(width: Int, height: Int, maxBounces: Int, camera: Camera, cameraType: CameraType, textures: Array<TextureDescriptor>) {
 		self.width = width
 		self.height = height
 		self.maxBounces = maxBounces
 		self.camera = camera
 		self.cameraType = cameraType
+		self.textures = textures
 	}
 	
-	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: LensFile) {
+	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: LensFile, textures: Array<TextureDescriptor>) {
 		let cameraType = CameraType.thickLens(CameraType.ThickLens(
 			aperture: Float(lensFile.aperture),
 			lensDistance: Float(lensFile.screenDistance),
@@ -31,7 +33,7 @@ struct RenderConfiguration {
 			apertureDistance: Float(lensFile.apertureDistance),
 			lenses: lensFile.lenses
 		))
-		self.init(width: width, height: height, maxBounces: maxBounces, camera: camera, cameraType: cameraType)
+		self.init(width: width, height: height, maxBounces: maxBounces, camera: camera, cameraType: cameraType, textures: textures)
 	}
 	
 	func makeShaderConstants() -> MTLFunctionConstantValues {

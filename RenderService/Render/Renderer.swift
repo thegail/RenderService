@@ -8,8 +8,6 @@
 import Foundation
 import Metal
 
-let testURLs = [URL(filePath: "/Users/thegail/Desktop/oak_log.png"), URL(filePath: "/Users/thegail/Desktop/oak_log_top.png"), URL(filePath: "/Users/thegail/Desktop/glowstone.png")]
-
 class Renderer {
 	let config: RenderConfiguration
 	let device: RenderDevice
@@ -19,7 +17,7 @@ class Renderer {
 	let uniformsBuffer: MTLBuffer
 	let lensBuffer: MTLBuffer?
 	let resourcesHeap: MTLHeap
-	let resources: Array<MTLTexture>
+	let resources: Dictionary<UUID, MTLTexture>
 	let accelerationStructure: MTLAccelerationStructure
 	var uniforms: Uniforms
 	
@@ -36,8 +34,8 @@ class Renderer {
 		} else {
 			self.lensBuffer = nil
 		}
-		(self.resourcesHeap, self.resources) = try device.makeResourcesHeap(urls: testURLs)
-		let (vertices, triangles) = generateTestScene(textureIDs: self.resources.map { $0.gpuResourceID._impl })
+		(self.resourcesHeap, self.resources) = try device.makeResourcesHeap(textures: config.textures)
+		let (vertices, triangles) = generateTestScene(textures: self.resources.mapValues { $0.gpuResourceID._impl })
 		self.accelerationStructure = try device.makeAccelerationStructure(vertices: vertices, triangles: triangles)
 		self.uniforms = uniforms
 	}
