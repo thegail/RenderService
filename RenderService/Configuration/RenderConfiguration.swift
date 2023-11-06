@@ -16,7 +16,7 @@ struct RenderConfiguration {
 	let cameraType: CameraType
 	let textures: Array<TextureDescriptor>
 	
-	init(width: Int, height: Int, maxBounces: Int, camera: Camera, cameraType: CameraType, textures: Array<TextureDescriptor>) {
+	init(width: Int, height: Int, maxBounces: Int, camera: Camera, cameraType: CameraType, textures: TexturesFile) {
 		self.width = width
 		self.height = height
 		self.maxBounces = maxBounces
@@ -25,7 +25,7 @@ struct RenderConfiguration {
 		self.textures = textures
 	}
 	
-	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: LensFile, textures: Array<TextureDescriptor>) {
+	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: LensFile, textures: TexturesFile) {
 		let cameraType = CameraType.thickLens(CameraType.ThickLens(
 			aperture: Float(lensFile.aperture),
 			lensDistance: Float(lensFile.screenDistance),

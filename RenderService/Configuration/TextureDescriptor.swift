@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TextureDescriptor {
+struct TextureDescriptor: Codable {
 	let id: UUID
 	let file: URL
 }

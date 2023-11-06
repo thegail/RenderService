@@ -7,12 +7,7 @@
 
 import Foundation
 
-let textureDescriptors = [
-	TextureDescriptor(id: UUID(uuidString: "A6134345-2213-445F-B77B-ECC4EAC8E2EF")!, file: URL(filePath: "/Users/thegail/Desktop/oak_log.png")),
-	TextureDescriptor(id: UUID(uuidString: "BB5797D0-2D1A-4C1D-BCF8-300A21AEB8EF")!, file: URL(filePath: "/Users/thegail/Desktop/oak_log_top.png")),
-	TextureDescriptor(id: UUID(uuidString: "BCF45004-CE0D-4EA0-8619-7A39BA536E72")!, file: URL(filePath: "/Users/thegail/Desktop/glowstone.png"))
-]
-let configuration = RenderConfiguration(width: 1000, height: 1000, maxBounces: 4, camera: Camera(position: SIMD3(2, 2, 0), pitch: 0, roll: 0, yaw: 0), cameraType: .pinhole, textures: textureDescriptors)
+let configuration = try RenderConfiguration(width: 1000, height: 1000, maxBounces: 4, camera: Camera(position: SIMD3(2, 2, 0), pitch: 0, roll: 0, yaw: 0), cameraType: .pinhole, textures: TexturesFile(url: URL(filePath: "/Users/thegail/Desktop/textures.plist")))
 let renderer = try Renderer(device: RenderDevice(), config: configuration)
 
 let samples = 10000
