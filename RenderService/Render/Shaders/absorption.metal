@@ -25,7 +25,7 @@ float3 calculate_absorption(Triangle triangle, float2 triangle_coords) {
 	if (triangle.primitive_flags & 0b10) {
 		float2 uv = calc_tex_coords(triangle_coords, triangle.primitive_flags & 0b1);
 		constexpr sampler s(coord::normalized, address::clamp_to_zero, filter::nearest);
-		color = pow(triangle.texture.sample(s, uv).xyz, 2.2);
+		color = pow(triangle.texture.sample(s, uv).xyz, 2.8);
 	} else {
 		color = triangle.normal * 0.5 + 0.5;
 	}

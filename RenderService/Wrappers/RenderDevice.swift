@@ -95,7 +95,7 @@ class RenderDevice {
 		descriptor.height = height
 		descriptor.usage = [.shaderRead, .shaderWrite]
 		descriptor.storageMode = .private
-		descriptor.pixelFormat = .bgra8Unorm
+		descriptor.pixelFormat = .rgba32Float
 		
 		guard let texture = self.inner.makeTexture(descriptor: descriptor) else {
 			throw RenderError.targetTexture

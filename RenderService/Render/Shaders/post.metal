@@ -21,6 +21,6 @@ kernel void post(ushort2 coords [[thread_position_in_grid]],
 				 texture2d<float, access::write> output [[texture(1)]]) {
 	float3 color = input.read(coords).xyz;
 	color = hdr(color);
-	color = gamma_correct(color, 2.2);
+	color = gamma_correct(color, 2.8);
 	output.write(float4(color, 1), coords);
 }
