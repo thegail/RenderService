@@ -83,8 +83,8 @@ kernel void render_image(uint2 screen_coords [[thread_position_in_grid]],
 		
 		accumulated_emission += accumulated_absorption * calculate_emission(triangle, intersection.triangle_barycentric_coord);
 		float2 sample_r = float2(halton(offset, 2 + bounce * 3 + 0), halton(offset, 2 + bounce * 3 + 1));
-		float3 new_direction = sample_direction(triangle, sample_r);
-		accumulated_absorption *= calculate_absorption(triangle, intersection.triangle_barycentric_coord);
+		float3 new_direction = sample_direction(triangle, ray.direction, sample_r);
+		accumulated_absorption *= calculate_absorption(triangle, intersection.triangle_barycentric_coord, ray.direction, new_direction);
 		
 		float cont_prob = max3(accumulated_absorption.x, accumulated_absorption.y, accumulated_absorption.z);
 		if (halton(offset, 2 + bounce * 3 + 2) > cont_prob) {

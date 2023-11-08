@@ -24,6 +24,7 @@
 		32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32997E602ABE33FF00F5BDD3 /* sample.metal */; };
 		32C150542AF94D7700DF0951 /* TextureDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C150532AF94D7700DF0951 /* TextureDescriptor.swift */; };
 		32C150562AF9969800DF0951 /* TexturesFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C150552AF9969800DF0951 /* TexturesFile.swift */; };
+		32CA85062AFB453C003BE8FB /* LightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85052AFB453C003BE8FB /* LightModel.swift */; };
 		32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C762AF2BE0A0068F655 /* Camera.swift */; };
 		32CC5C792AF2C7A50068F655 /* CameraType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C782AF2C7A50068F655 /* CameraType.swift */; };
 		32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */; };
@@ -71,6 +72,7 @@
 		32997E602ABE33FF00F5BDD3 /* sample.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = sample.metal; sourceTree = "<group>"; };
 		32C150532AF94D7700DF0951 /* TextureDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureDescriptor.swift; sourceTree = "<group>"; };
 		32C150552AF9969800DF0951 /* TexturesFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexturesFile.swift; sourceTree = "<group>"; };
+		32CA85052AFB453C003BE8FB /* LightModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightModel.swift; sourceTree = "<group>"; };
 		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		32CC5C782AF2C7A50068F655 /* CameraType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraType.swift; sourceTree = "<group>"; };
 		32CC5C902AF2CFE00068F655 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				32997E402ABBF5B200F5BDD3 /* RenderConfiguration.swift */,
+				32CA85052AFB453C003BE8FB /* LightModel.swift */,
 				32CC5C782AF2C7A50068F655 /* CameraType.swift */,
 				32CC5C762AF2BE0A0068F655 /* Camera.swift */,
 				32CC5CAF2AF4B4B70068F655 /* LensFile.swift */,
@@ -312,6 +315,7 @@
 			files = (
 				32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */,
 				32CC5CB02AF4B4B70068F655 /* LensFile.swift in Sources */,
+				32CA85062AFB453C003BE8FB /* LightModel.swift in Sources */,
 				32997E322ABB8C0300F5BDD3 /* Renderer.swift in Sources */,
 				32997E392ABB8D8A00F5BDD3 /* RenderDevice.swift in Sources */,
 				32997E562ABCC99000F5BDD3 /* post.metal in Sources */,
