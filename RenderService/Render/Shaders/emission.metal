@@ -16,9 +16,9 @@ float3 calculate_emission(Triangle triangle, float2 triangle_coords) {
 		if (triangle.primitive_flags & 0b10) {
 			float2 uv = calc_tex_coords(triangle_coords, triangle.primitive_flags & 0b1);
 			constexpr sampler s(coord::normalized, address::clamp_to_zero, filter::nearest);
-			return float3(6) * pow(triangle.texture.sample(s, uv).xyz, 2.8);
+			return float3(10) * pow(triangle.texture.sample(s, uv).xyz, 2.8);
 		} else {
-			return float3(3);
+			return float3(10);
 		}
 	} else {
 		return float3(0);

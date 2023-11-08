@@ -15,7 +15,7 @@ float3 align_hemisphere_with_normal(float3 sample, float3 normal) {
 }
 
 float3 cosine_sample(Triangle triangle, float3 incident, float2 r) {
-	float phi = M_2_PI_F * r.x;
+	float phi = 2 * M_PI_F * r.x;
 	float cos_phi;
 	float sin_phi = sincos(phi, cos_phi);
 
@@ -68,5 +68,6 @@ float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
 }
 
 float3 sample_direction(Triangle triangle, float3 incident, float2 r) {
-	return ggx_sample(triangle, incident, r);
+	return cosine_sample(triangle, incident, r);
+//	return ggx_sample(triangle, incident, r);
 }

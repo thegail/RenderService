@@ -89,8 +89,8 @@ float dielectric_fresnal(float3 incident, float3 ms_normal, float refractive_ind
 
 float schlick_fresnel(float3 incident, float3 ms_normal, float refractive_index) {
 	float initial = (1 - refractive_index) / (1 + refractive_index);
-	float m_dot_i = dot(ms_normal, incident);
-	return initial * initial + (1 - initial * initial) * pow(1 - m_dot_i, 5);
+	float m_dot_i = saturate(dot(ms_normal, incident));
+	return initial * initial + (1 - initial * initial) * pow(1 + 1e-5 - m_dot_i, 5);
 }
 
 float distribution(float3 ms_normal, float3 normal, float alpha) {
@@ -116,7 +116,8 @@ float3 reflectance(float3 color, float3 incident, float3 sample, float3 normal, 
 //	float dist = 4 * abs(dot(incident, sample));
 	float geo = geometry(incident, sample, half_v, normal, roughness);
 	float3 specular = fresnel * dist * geo / (4 * abs(dot(incident, normal)) * abs(dot(sample, normal)));
-	float3 diffuse = (1 - fresnel) * color / M_PI_F;
+	float3 sample_fresnel = schlick_fresnel(sample, half_v, 1.5);
+	float3 diffuse = (1 - fresnel) * (1 - sample_fresnel) * color / M_PI_F;
 	return diffuse + specular;
 }
 
@@ -127,11 +128,11 @@ float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 in
 		float2 uv = calc_tex_coords(triangle_coords, triangle.primitive_flags & 0b1);
 		constexpr sampler s(coord::normalized, address::clamp_to_zero, filter::nearest);
 		color = pow(triangle.texture.sample(s, uv).xyz, 2.8);
-		roughness = 1.0;
+		roughness = 1;
 	} else {
 		color = triangle.normal * 0.5 + 0.5;
 		roughness = 0;
 	}
 	
-	return reflectance(color, incident, sample, triangle.normal, roughness);
+	return reflectance(color, -incident, sample, triangle.normal, roughness);
 }
