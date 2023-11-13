@@ -34,7 +34,7 @@ float3 sample_aperture(float length, float aperture, float2 random) {
 	float theta = random.x * M_PI_2_F;
 	float cos_theta;
 	float sin_theta = sincos(theta, cos_theta);
-	float radius = aperture * random.y;
+	float radius = sqrt(aperture * random.y);
 	return float3(cos_theta * radius, sin_theta * radius, length);
 }
 
