@@ -27,17 +27,6 @@ struct RenderConfiguration {
 		self.lightModel = lightModel
 	}
 	
-	init(width: Int, height: Int, maxBounces: Int, camera: Camera, lensFile: LensFile, textures: TexturesFile, lightModel: LightModel) {
-		let cameraType = CameraType.thickLens(CameraType.ThickLens(
-			aperture: Float(lensFile.aperture),
-			lensDistance: Float(lensFile.screenDistance),
-			sampleScreenSize: SIMD2(Float(lensFile.screenWidth), Float(lensFile.screenHeight)),
-			apertureDistance: Float(lensFile.apertureDistance),
-			lenses: lensFile.lenses
-		))
-		self.init(width: width, height: height, maxBounces: maxBounces, camera: camera, cameraType: cameraType, textures: textures, lightModel: lightModel)
-	}
-	
 	func makeShaderConstants() -> MTLFunctionConstantValues {
 		var maxBounces: UInt32 = UInt32(self.maxBounces)
 		

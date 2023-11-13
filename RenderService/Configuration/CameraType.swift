@@ -10,25 +10,17 @@ import Metal
 enum CameraType {
 	case pinhole
 	case thinLens(ThinLens)
-	case thickLens(ThickLens)
+	case thickLens(LensFile)
 	
 	struct ThinLens {
 		let aperture: Float
 		let focusDistance: Float
 	}
 	
-	struct ThickLens {
-		let aperture: Float
-		let lensDistance: Float
-		let sampleScreenSize: SIMD2<Float>
-		let apertureDistance: Float
-		let lenses: Array<LensFile.Lens>
-	}
-	
 	var lensData: Array<Lens> {
 		switch self {
 		case .thickLens(let lens):
-			return lens.lenses.sorted(by: { $0.position > $1.position }).flatMap { [
+			return lens.lenses.sorted(by: { $0.position > $1.position }).flatMap {[
 				Lens(
 					centerpoint: simd_float3(0, 0, -Float($0.position + $0.thickness)),
 					radius: Float($0.frontRadius),
@@ -64,10 +56,10 @@ enum CameraType {
 			focusDistance = lens.focusDistance
 		case .thickLens(let lens):
 			cameraType = 2
-			aperture = lens.aperture
-			apertureDistance = lens.apertureDistance
-			sampleScreenSize = lens.sampleScreenSize
-			lensDistance = lens.lensDistance
+			aperture = Float(lens.aperture)
+			apertureDistance = Float(lens.apertureDistance)
+			sampleScreenSize = SIMD2<Float>(Float(lens.screenWidth), Float(lens.screenHeight))
+			lensDistance = Float(lens.screenDistance)
 			lensCount = UInt32(self.lensData.count)
 		}
 		constants.setConstantValue(&cameraType, type: .uchar, withName: "camera_type")
