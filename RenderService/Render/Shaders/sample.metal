@@ -14,6 +14,19 @@ float3 align_hemisphere_with_normal(float3 sample, float3 normal) {
 	return sample.x * right + sample.y * up + sample.z * forward;
 }
 
+float3 uniform_sample(Triangle triangle, float3 incident, float2 r) {
+	float phi = 2 * M_PI_F * r.x;
+	float cos_phi;
+	float sin_phi = sincos(phi, cos_phi);
+
+	float theta = M_PI_2_F * r.y;
+	float cos_theta;
+	float sin_theta = sincos(theta, cos_theta);
+	
+	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
+	return align_hemisphere_with_normal(sample, triangle.normal);
+}
+
 float3 cosine_sample(Triangle triangle, float3 incident, float2 r) {
 	float phi = 2 * M_PI_F * r.x;
 	float cos_phi;
@@ -71,6 +84,5 @@ float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
 }
 
 float3 sample_direction(Triangle triangle, float3 incident, float2 r) {
-	return cosine_sample(triangle, incident, r);
-//	return ggx_sample(triangle, incident, r);
+	return uniform_sample(triangle, incident, r);
 }
