@@ -109,19 +109,34 @@ float geometry(float3 incident, float3 sample, float3 ms_normal, float3 normal, 
 	return shadowing(incident, ms_normal, normal, alpha) * shadowing(sample, ms_normal, normal, alpha);
 }
 
-float3 reflectance(float3 color, float3 incident, float3 sample, float3 normal, float roughness) {
+float3 reflectance(float3 incident, float3 sample, float3 normal, float roughness) {
 	float3 half_v = normalize(sample + incident);
 	float fresnel = schlick_fresnel(incident, half_v, 1.5);
 	float dist = distribution(half_v, normal, roughness);
-//	float dist = 4 * abs(dot(incident, sample));
 	float geo = geometry(incident, sample, half_v, normal, roughness);
 	float3 specular = fresnel * dist * geo / (4 * abs(dot(incident, normal)) * abs(dot(sample, normal)));
-	float3 sample_fresnel = schlick_fresnel(sample, half_v, 1.5);
-	float3 diffuse = (1 - fresnel) * (1 - sample_fresnel) * color / M_PI_F;
-	return diffuse + specular;
+	return specular;
 }
 
-float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 incident, float3 sample) {
+float3 transmittance(float3 incident, float3 sample, float3 normal, float roughness) {
+	float eta_i = 1;
+	float eta_o = 1.5;
+	float3 half_v = normalize(-eta_i * incident - eta_o * sample);
+	float vector_num = abs(dot(incident, half_v)) * abs(dot(sample, half_v));
+	float vector_denom = abs(dot(incident, normal)) * abs(dot(sample, normal));
+	float fresnel = eta_o * eta_o * (1 - schlick_fresnel(incident, half_v, 1.5));
+	float geo = geometry(incident, sample, half_v, normal, roughness);
+	float dist = distribution(half_v, normal, roughness);
+	float eta_term = eta_i * dot(incident, half_v) + eta_o * dot(sample, half_v);
+	return vector_num * fresnel * geo * dist / (eta_term * eta_term * vector_denom);
+}
+
+float3 diffuse(float3 incident, float3 sample, float3 normal) {
+	float3 half_v = normalize(sample + incident);
+	return (1 - schlick_fresnel(incident, half_v, 1.5)) * (1 - schlick_fresnel(sample, half_v, 1.5)) * dot(normal, sample);
+}
+
+float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 incoming, float3 sample) {
 	float3 color;
 	float roughness;
 	if (triangle.primitive_flags & 0b10) {
@@ -134,5 +149,8 @@ float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 in
 		roughness = 0;
 	}
 	
-	return reflectance(color, -incident, sample, triangle.normal, roughness);
+	float3 refl = reflectance(-incoming, sample, triangle.normal, roughness);
+	float3 trans = transmittance(-incoming, sample, triangle.normal, roughness);
+	float3 diff = color * diffuse(-incoming, sample, triangle.normal);
+	return refl + trans + diff;
 }
