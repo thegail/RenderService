@@ -131,12 +131,11 @@ float3 transmittance(float3 incident, float3 sample, float3 normal, float roughn
 	return vector_num * fresnel * geo * dist / (eta_term * eta_term * vector_denom);
 }
 
-float3 diffuse(float3 incident, float3 sample, float3 normal) {
-	float3 half_v = normalize(sample + incident);
-	return (1 - schlick_fresnel(incident, half_v, 1.5)) * (1 - schlick_fresnel(sample, half_v, 1.5)) * dot(normal, sample);
-}
-
-float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 incoming, float3 sample) {
+float3 calculate_absorption(Triangle triangle,
+							float2 triangle_coords,
+							float3 incoming,
+							float3 sample,
+							float sampling_strategy) {
 	float3 color;
 	float roughness;
 	if (triangle.primitive_flags & 0b10) {
@@ -149,8 +148,11 @@ float3 calculate_absorption(Triangle triangle, float2 triangle_coords, float3 in
 		roughness = 0;
 	}
 	
-	float3 refl = reflectance(-incoming, sample, triangle.normal, roughness);
-	float3 trans = transmittance(-incoming, sample, triangle.normal, roughness);
-	float3 diff = color * diffuse(-incoming, sample, triangle.normal);
-	return refl + trans + diff;
+	if (sampling_strategy < 0.5) {
+		return color;
+	} else {
+		float3 refl = reflectance(-incoming, sample, triangle.normal, roughness);
+		float3 trans = transmittance(-incoming, sample, triangle.normal, roughness);
+		return refl + trans;
+	}
 }

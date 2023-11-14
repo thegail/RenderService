@@ -83,6 +83,10 @@ float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
 	return reflect(incident, normal);
 }
 
-float3 sample_direction(Triangle triangle, float3 incident, float2 r) {
-	return uniform_sample(triangle, incident, r);
+float3 sample_direction(Triangle triangle, float3 incoming, float2 r, float sampling_strategy) {
+	if (sampling_strategy < 0.5) {
+		return cosine_sample(triangle, -incoming, r);
+	} else {
+		return ggx_sample(triangle, -incoming, r);
+	}
 }
