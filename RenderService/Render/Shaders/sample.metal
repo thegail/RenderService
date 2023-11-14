@@ -37,7 +37,8 @@ float3 beckmann_sample(Triangle triangle, float3 incident, float2 r) {
 	float sin_theta = sqrt(1 - cos_theta * cos_theta);
 	
 	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	return reflect(incident, sample);
+	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
+	return reflect(incident, normal);
 }
 
 float3 phong_sample(Triangle triangle, float3 incident, float2 r) {
@@ -50,7 +51,8 @@ float3 phong_sample(Triangle triangle, float3 incident, float2 r) {
 	float sin_theta = sqrt(1 - cos_theta * cos_theta);
 	
 	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	return reflect(incident, sample);
+	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
+	return reflect(incident, normal);
 }
 
 float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
@@ -64,7 +66,8 @@ float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
 	float sin_theta = sqrt(1 - cos_theta * cos_theta);
 	
 	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	return reflect(incident, sample);
+	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
+	return reflect(incident, normal);
 }
 
 float3 sample_direction(Triangle triangle, float3 incident, float2 r) {
