@@ -14,7 +14,7 @@ float3 align_hemisphere_with_normal(float3 sample, float3 normal) {
 	return sample.x * right + sample.y * up + sample.z * forward;
 }
 
-float3 uniform_sample(Triangle triangle, float3 incident, float2 r) {
+float3 uniform_sample(Triangle triangle, float3 incoming, float2 r) {
 	float phi = 2 * M_PI_F * r.x;
 	float cos_phi;
 	float sin_phi = sincos(phi, cos_phi);
@@ -27,7 +27,7 @@ float3 uniform_sample(Triangle triangle, float3 incident, float2 r) {
 	return align_hemisphere_with_normal(sample, triangle.normal);
 }
 
-float3 cosine_sample(Triangle triangle, float3 incident, float2 r) {
+float3 cosine_sample(Triangle triangle, float3 incoming, float2 r) {
 	float phi = 2 * M_PI_F * r.x;
 	float cos_phi;
 	float sin_phi = sincos(phi, cos_phi);
@@ -39,54 +39,6 @@ float3 cosine_sample(Triangle triangle, float3 incident, float2 r) {
 	return align_hemisphere_with_normal(sample, triangle.normal);
 }
 
-float3 beckmann_sample(Triangle triangle, float3 incident, float2 r) {
-	float phi = M_2_PI_F * r.x;
-	float cos_phi;
-	float sin_phi = sincos(phi, cos_phi);
-	
-	float alpha = triangle.primitive_flags & 0b10 ? 1 : 0;
-	float t_sq_theta = -alpha * alpha * log(1 - r.y);
-	float cos_theta = rsqrt(1 + t_sq_theta);
-	float sin_theta = sqrt(1 - cos_theta * cos_theta);
-	
-	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
-	return reflect(incident, normal);
-}
-
-float3 phong_sample(Triangle triangle, float3 incident, float2 r) {
-	float phi = M_2_PI_F * r.x;
-	float cos_phi;
-	float sin_phi = sincos(phi, cos_phi);
-	
-	float alpha = triangle.primitive_flags & 0b10 ? 1 : 0;
-	float cos_theta = pow(r.y, 1 / (alpha + 2));
-	float sin_theta = sqrt(1 - cos_theta * cos_theta);
-	
-	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
-	return reflect(incident, normal);
-}
-
-float3 ggx_sample(Triangle triangle, float3 incident, float2 r) {
-	float phi = M_2_PI_F * r.x;
-	float cos_phi;
-	float sin_phi = sincos(phi, cos_phi);
-	
-	float alpha = triangle.primitive_flags & 0b10 ? 1 : 0;
-	float tan_theta = alpha * sqrt(r.y) * rsqrt(1 - r.y);
-	float cos_theta = rsqrt(1 + tan_theta * tan_theta);
-	float sin_theta = sqrt(1 - cos_theta * cos_theta);
-	
-	float3 sample = float3(sin_theta * cos_phi, cos_theta, sin_theta * sin_phi);
-	float3 normal = align_hemisphere_with_normal(sample, triangle.normal);
-	return reflect(incident, normal);
-}
-
 float3 sample_direction(Triangle triangle, float3 incoming, float2 r, float sampling_strategy) {
-	if (sampling_strategy < 0.5) {
-		return cosine_sample(triangle, -incoming, r);
-	} else {
-		return ggx_sample(triangle, -incoming, r);
-	}
+	return uniform_sample(triangle, incoming, r);
 }
