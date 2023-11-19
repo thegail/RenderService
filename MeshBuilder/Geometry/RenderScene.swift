@@ -20,7 +20,7 @@ class RenderScene {
 		self.objects.flatMap { $0.vertices }
 	}
 	
-	var primitives: Array<UInt8> {
+	var primitives: Array<Triangle> {
 		self.objects.flatMap { $0.primitives }
 	}
 }

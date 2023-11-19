@@ -16,6 +16,10 @@ struct Camera {
 	let roll: Double
 	let yaw: Double
 	
+	var position: SIMD3<Float> {
+		return SIMD3(Float(self.x), Float(self.y), Float(self.z))
+	}
+	
 	var translationMatrix: simd_float4x4 {
 		return simd_float4x4(
 			SIMD4(1, 0, 0, 0),

@@ -30,6 +30,7 @@ fragment float4 render_fragment(RasterizerData in [[stage_in]],
 								constant Uniforms& uniforms [[buffer(1)]]) {
 	Triangle primitive = primitives[in.primitive_id];
 	float3 incident = uniforms.camera - in.position;
+	float3 color = primitive.normal * 0.5 + 0.5;
 	float shade = dot(incident, primitive.normal);
-	return float4(shade * primitive.color, 1);
+	return float4(shade * color, 1);
 }

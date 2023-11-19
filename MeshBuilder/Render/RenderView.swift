@@ -11,6 +11,7 @@ import MetalKit
 struct RenderView: NSViewRepresentable {
 	func makeNSView(context: Context) -> some NSView {
 		let mtkView = MTKView()
+		mtkView.device = context.coordinator.renderer.device
 		mtkView.delegate = context.coordinator
 		return mtkView
 	}

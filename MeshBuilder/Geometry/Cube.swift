@@ -29,8 +29,8 @@ class Cube: Mesh {
 		simd_float3x3(columns: (SIMD3(cos(self.rotation), 0, -sin(self.rotation)), SIMD3(0, 1, 0), SIMD3(sin(self.rotation), 0, cos(self.rotation))))
 	}
 	
-	var primitives: Array<UInt8> {
-		self.faces.map { _ in 0 }
+	var primitives: Array<Triangle> {
+		self.faces.flatMap(self.faceTriangles)
 	}
 	
 	var vertices: Array<SIMD3<Float>> {
@@ -41,32 +41,31 @@ class Cube: Mesh {
 		self.faces.map(Self.faceVertices).reduce([], +)
 	}
 	
-//	private func faceTriangles(face: Face) -> Array<Triangle> {
-//		var normal: SIMD3<Float>
-//		switch face {
-//		case .up:
-//			normal = SIMD3(0, 1, 0)
-//		case .down:
-//			normal = SIMD3(0, -1, 0)
-//		case .left:
-//			normal = SIMD3(-1, 0, 0)
-//		case .right:
-//			normal = SIMD3(1, 0, 0)
-//		case .front:
-//			normal = SIMD3(0, 0, -1)
-//		case .back:
-//			normal = SIMD3(0, 0, 1)
-//		}
-//
-//		normal = normal * self.rotationMatrix
-//		if self.inverted {
-//			normal *= -1
-//		}
-//
-//		let color = self.scale.y == 1 ? SIMD3<Float>(repeating: 1) : SIMD3<Float>(repeating: 0.5)
-//		let textureFlag: UInt8 = self.textureID == nil ? 0 : 0b10
-//		return [Triangle(normal: normal, texture: self.textureID ?? 0, primitive_flags: textureFlag, color: color), Triangle(normal: normal, texture: self.textureID ?? 0, primitive_flags: textureFlag + 0b1, color: color)]
-//	}
+	private func faceTriangles(face: Face) -> Array<Triangle> {
+		var normal: SIMD3<Float>
+		switch face {
+		case .up:
+			normal = SIMD3(0, 1, 0)
+		case .down:
+			normal = SIMD3(0, -1, 0)
+		case .left:
+			normal = SIMD3(-1, 0, 0)
+		case .right:
+			normal = SIMD3(1, 0, 0)
+		case .front:
+			normal = SIMD3(0, 0, -1)
+		case .back:
+			normal = SIMD3(0, 0, 1)
+		}
+
+		normal = normal * self.rotationMatrix
+		if self.inverted {
+			normal *= -1
+		}
+
+		let color = self.scale.y == 1 ? SIMD3<Float>(repeating: 1) : SIMD3<Float>(repeating: 0.5)
+		return [Triangle(normal: normal, color: color), Triangle(normal: normal, color: color)]
+	}
 	
 	private static func faceVertices(face: Face) -> Array<SIMD3<Float>> {
 		let quad: Array<SIMD3<Float>>

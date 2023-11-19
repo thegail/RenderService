@@ -9,5 +9,5 @@ import Foundation
 
 protocol Mesh {
 	var vertices: Array<SIMD3<Float>> { get }
-	var primitives: Array<UInt8> { get }
+	var primitives: Array<Triangle> { get }
 }

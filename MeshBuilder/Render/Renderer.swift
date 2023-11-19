@@ -11,7 +11,7 @@ class Renderer {
 	let device: MTLDevice
 	let commandQueue: MTLCommandQueue
 	let renderPipeline: MTLRenderPipelineState
-	let depthTexture: MTLTexture
+	var depthTexture: MTLTexture
 	var primitiveCount: Int
 	var vertexBuffer: MTLBuffer
 	var primitiveBuffer: MTLBuffer
@@ -27,7 +27,7 @@ class Renderer {
 		self.primitiveCount = primitives.count
 		self.vertexBuffer = try Self.makeBuffer(device: device, data: scene.vertices)
 		self.primitiveBuffer = try Self.makeBuffer(device: device, data: primitives)
-		self.uniformsBuffer = try Self.makeBuffer(device: device, data: [simd_float4x4()])
+		self.uniformsBuffer = try Self.makeBuffer(device: device, data: [Uniforms(camera: scene.camera.position, matrix: scene.camera.transformationMatrix)])
 		self.scene = scene
 	}
 	
@@ -46,13 +46,20 @@ class Renderer {
 		encoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
 		encoder.setVertexBuffer(self.uniformsBuffer, offset: 0, index: 1)
 		encoder.setFragmentBuffer(self.primitiveBuffer, offset: 0, index: 0)
+		encoder.setFragmentBuffer(self.uniformsBuffer, offset: 0, index: 1)
 		encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: self.primitiveCount * 3)
 		encoder.endEncoding()
 		
+		guard let drawable = view.currentDrawable else {
+			throw RenderError.drawable
+		}
+		commandBuffer.present(drawable)
 		commandBuffer.commit()
 	}
 	
-	func updateSize(width: Int, height: Int) throws { }
+	func updateSize(width: Int, height: Int) throws {
+		self.depthTexture = try Self.makeDepthTexture(device: self.device, width: width, height: height)
+	}
 	
 	static func getDevice() throws -> MTLDevice {
 		guard let device = MTLCreateSystemDefaultDevice() else {
@@ -94,6 +101,8 @@ class Renderer {
 		descriptor.width = width
 		descriptor.height = height
 		descriptor.pixelFormat = .depth32Float
+		descriptor.usage = .renderTarget
+		descriptor.storageMode = .private
 		
 		guard let texture = device.makeTexture(descriptor: descriptor) else {
 			throw RenderError.depthTexture
