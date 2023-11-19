@@ -36,9 +36,10 @@ class Renderer {
 			throw RenderError.commandBuffer
 		}
 		
-		let renderPassDescriptor = MTLRenderPassDescriptor()
-		renderPassDescriptor.depthAttachment.texture = self.depthTexture
-		guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
+		guard let renderPass = view.currentRenderPassDescriptor else {
+			throw RenderError.renderPass
+		}
+		guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPass) else {
 			throw RenderError.commandEncoder
 		}
 		
@@ -89,6 +90,7 @@ class Renderer {
 		descriptor.vertexFunction = vertex
 		descriptor.fragmentFunction = fragment
 		descriptor.depthAttachmentPixelFormat = .depth32Float
+		descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
 		do {
 			return try device.makeRenderPipelineState(descriptor: descriptor)
 		} catch {

@@ -10,5 +10,5 @@ import Foundation
 enum RenderError: Error {
 	case device, library, shader, pipeline, buffer
 	case commandQueue, commandBuffer, depthTexture
-	case commandEncoder, drawable
+	case commandEncoder, drawable, renderPass
 }

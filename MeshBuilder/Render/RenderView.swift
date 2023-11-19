@@ -12,6 +12,8 @@ struct RenderView: NSViewRepresentable {
 	func makeNSView(context: Context) -> some NSView {
 		let mtkView = MTKView()
 		mtkView.device = context.coordinator.renderer.device
+		mtkView.colorPixelFormat = .bgra8Unorm
+		mtkView.depthStencilPixelFormat = .depth32Float
 		mtkView.delegate = context.coordinator
 		return mtkView
 	}
