@@ -13,5 +13,5 @@ func makeDefaultScene() -> RenderScene {
 	meshes.append(Cube(position: SIMD3(1, 0, 1)))
 	meshes.append(Cube(position: SIMD3(3, 0, 3), rotation: .pi / 6, scale: SIMD3(1, 3, 1)))
 	
-	return RenderScene(objects: meshes, camera: Camera(x: 2, y: 2, z: 0, pitch: 0, roll: 0, yaw: 0))
+	return RenderScene(objects: meshes, camera: Camera(x: 2, y: 2, z: -1, pitch: 0, roll: 0, yaw: 0))
 }
