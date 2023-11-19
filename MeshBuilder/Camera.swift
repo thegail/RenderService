@@ -63,11 +63,10 @@ struct Camera {
 	var perspectiveMatrix: simd_float4x4 {
 		let fov: Float = 0.5 * .pi
 		let near: Float = 0.04
-		let far: Float = 2
+		let far: Float = 20
 		let f: Float = 1 / tan(fov * 0.5)
-		let aspectRatio: Float = 1
 		return simd_float4x4(
-			SIMD4(f / aspectRatio, 0, 0, 0),
+			SIMD4(-f, 0, 0, 0),
 			SIMD4(0, f, 0, 0),
 			SIMD4(0, 0, far / (far - near), 1),
 			SIMD4(0, 0, 2 * near * far / (near - far), 0)
@@ -75,6 +74,6 @@ struct Camera {
 	}
 	
 	var transformationMatrix: simd_float4x4 {
-		self.perspectiveMatrix * self.translationMatrix
+		self.perspectiveMatrix * self.rollMatrix * self.pitchMatrix * self.yawMatrix * self.translationMatrix
 	}
 }

@@ -11,24 +11,28 @@ class Renderer {
 	let device: MTLDevice
 	let commandQueue: MTLCommandQueue
 	let renderPipeline: MTLRenderPipelineState
-	var depthTexture: MTLTexture
+	let depthState: MTLDepthStencilState
 	var primitiveCount: Int
 	var vertexBuffer: MTLBuffer
 	var primitiveBuffer: MTLBuffer
 	let uniformsBuffer: MTLBuffer
 	let scene: RenderScene
+	var width: Int
+	var height: Int
 	
 	init(scene: RenderScene) throws {
 		self.device = try Self.getDevice()
 		self.commandQueue = try Self.getCommandQueue(device: self.device)
 		self.renderPipeline = try Self.makeRenderPipeline(device: self.device)
-		self.depthTexture = try Self.makeDepthTexture(device: self.device, width: 1, height: 1)
+		self.depthState = try Self.makeDepthState(device: self.device)
 		let primitives = scene.primitives
 		self.primitiveCount = primitives.count
 		self.vertexBuffer = try Self.makeBuffer(device: device, data: scene.vertices)
 		self.primitiveBuffer = try Self.makeBuffer(device: device, data: primitives)
-		self.uniformsBuffer = try Self.makeBuffer(device: device, data: [Uniforms(camera: scene.camera.position, matrix: scene.camera.transformationMatrix)])
+		self.uniformsBuffer = try Self.makeBuffer(device: device, data: [Uniforms(camera: SIMD3(0, 0, 0), matrix: simd_float4x4())])
 		self.scene = scene
+		self.width = 1
+		self.height = 1
 	}
 	
 	func draw(in view: MTKView) throws {
@@ -44,6 +48,7 @@ class Renderer {
 		}
 		
 		encoder.setRenderPipelineState(self.renderPipeline)
+		encoder.setDepthStencilState(self.depthState)
 		encoder.setVertexBuffer(self.vertexBuffer, offset: 0, index: 0)
 		encoder.setVertexBuffer(self.uniformsBuffer, offset: 0, index: 1)
 		encoder.setFragmentBuffer(self.primitiveBuffer, offset: 0, index: 0)
@@ -59,7 +64,17 @@ class Renderer {
 	}
 	
 	func updateSize(width: Int, height: Int) throws {
-		self.depthTexture = try Self.makeDepthTexture(device: self.device, width: width, height: height)
+		self.width = width
+		self.height = height
+		self.updateUniforms()
+	}
+	
+	private func updateUniforms() {
+		let aspectRatio = Float(self.width) / Float(self.height)
+		let aspectRatioMatrix = simd_float4x4(diagonal: SIMD4(1 / aspectRatio, 1, 1, 1))
+		let uniforms = self.uniformsBuffer.contents().assumingMemoryBound(to: Uniforms.self)
+		uniforms.pointee.camera = self.scene.camera.position
+		uniforms.pointee.matrix = aspectRatioMatrix * self.scene.camera.transformationMatrix
 	}
 	
 	static func getDevice() throws -> MTLDevice {
@@ -98,18 +113,15 @@ class Renderer {
 		}
 	}
 	
-	static func makeDepthTexture(device: MTLDevice, width: Int, height: Int) throws -> MTLTexture {
-		let descriptor = MTLTextureDescriptor()
-		descriptor.width = width
-		descriptor.height = height
-		descriptor.pixelFormat = .depth32Float
-		descriptor.usage = .renderTarget
-		descriptor.storageMode = .private
-		
-		guard let texture = device.makeTexture(descriptor: descriptor) else {
-			throw RenderError.depthTexture
+	static func makeDepthState(device: MTLDevice) throws -> MTLDepthStencilState {
+		let descriptor = MTLDepthStencilDescriptor()
+		descriptor.depthCompareFunction = .lessEqual
+		descriptor.isDepthWriteEnabled = true
+		guard let depthState = device.makeDepthStencilState(descriptor: descriptor) else {
+			throw RenderError.depthState
 		}
-		return texture
+		
+		return depthState
 	}
 	
 	static func makeBuffer<T>(device: MTLDevice, data: Array<T>) throws -> MTLBuffer {
