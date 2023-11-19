@@ -25,6 +25,20 @@
 		32C150542AF94D7700DF0951 /* TextureDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C150532AF94D7700DF0951 /* TextureDescriptor.swift */; };
 		32C150562AF9969800DF0951 /* TexturesFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C150552AF9969800DF0951 /* TexturesFile.swift */; };
 		32CA85062AFB453C003BE8FB /* LightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85052AFB453C003BE8FB /* LightModel.swift */; };
+		32CA85102B03F959003BE8FB /* MeshBuilderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA850F2B03F959003BE8FB /* MeshBuilderApp.swift */; };
+		32CA85122B03F959003BE8FB /* MeshBuilderDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85112B03F959003BE8FB /* MeshBuilderDocument.swift */; };
+		32CA85142B03F959003BE8FB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85132B03F959003BE8FB /* ContentView.swift */; };
+		32CA85162B03F95A003BE8FB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32CA85152B03F95A003BE8FB /* Assets.xcassets */; };
+		32CA85192B03F95A003BE8FB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32CA85182B03F95A003BE8FB /* Preview Assets.xcassets */; };
+		32CA85402B03FCF8003BE8FB /* RenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA853F2B03FCF8003BE8FB /* RenderView.swift */; };
+		32CA85422B03FF7A003BE8FB /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85412B03FF7A003BE8FB /* Renderer.swift */; };
+		32CA85442B07DB9E003BE8FB /* RenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85432B07DB9E003BE8FB /* RenderError.swift */; };
+		32CA85462B07E286003BE8FB /* RenderScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85452B07E286003BE8FB /* RenderScene.swift */; };
+		32CA85482B07E2F2003BE8FB /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85472B07E2F2003BE8FB /* Camera.swift */; };
+		32CA854A2B098D8A003BE8FB /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85492B098D8A003BE8FB /* Mesh.swift */; };
+		32CA854F2B099502003BE8FB /* makeDefaultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA854E2B099502003BE8FB /* makeDefaultScene.swift */; };
+		32CA85512B09950D003BE8FB /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85502B09950D003BE8FB /* Cube.swift */; };
+		32CA85532B09A0B7003BE8FB /* shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32CA85522B09A0B7003BE8FB /* shaders.metal */; };
 		32CC5C772AF2BE0A0068F655 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C762AF2BE0A0068F655 /* Camera.swift */; };
 		32CC5C792AF2C7A50068F655 /* CameraType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C782AF2C7A50068F655 /* CameraType.swift */; };
 		32CC5C982AF2D0490068F655 /* LensDesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CC5C972AF2D0490068F655 /* LensDesignerApp.swift */; };
@@ -73,6 +87,25 @@
 		32C150532AF94D7700DF0951 /* TextureDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureDescriptor.swift; sourceTree = "<group>"; };
 		32C150552AF9969800DF0951 /* TexturesFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TexturesFile.swift; sourceTree = "<group>"; };
 		32CA85052AFB453C003BE8FB /* LightModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightModel.swift; sourceTree = "<group>"; };
+		32CA850D2B03F959003BE8FB /* MeshBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeshBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32CA850F2B03F959003BE8FB /* MeshBuilderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBuilderApp.swift; sourceTree = "<group>"; };
+		32CA85112B03F959003BE8FB /* MeshBuilderDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeshBuilderDocument.swift; sourceTree = "<group>"; };
+		32CA85132B03F959003BE8FB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		32CA85152B03F95A003BE8FB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		32CA85182B03F95A003BE8FB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		32CA851A2B03F95A003BE8FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32CA851B2B03F95A003BE8FB /* MeshBuilder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeshBuilder.entitlements; sourceTree = "<group>"; };
+		32CA853F2B03FCF8003BE8FB /* RenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderView.swift; sourceTree = "<group>"; };
+		32CA85412B03FF7A003BE8FB /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		32CA85432B07DB9E003BE8FB /* RenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderError.swift; sourceTree = "<group>"; };
+		32CA85452B07E286003BE8FB /* RenderScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderScene.swift; sourceTree = "<group>"; };
+		32CA85472B07E2F2003BE8FB /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		32CA85492B098D8A003BE8FB /* Mesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
+		32CA854E2B099502003BE8FB /* makeDefaultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makeDefaultScene.swift; sourceTree = "<group>"; };
+		32CA85502B09950D003BE8FB /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		32CA85522B09A0B7003BE8FB /* shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = shaders.metal; sourceTree = "<group>"; };
+		32CA85542B09A444003BE8FB /* uniforms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = uniforms.h; sourceTree = "<group>"; };
+		32CA85552B09A4BF003BE8FB /* bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bridging.h; sourceTree = "<group>"; };
 		32CC5C762AF2BE0A0068F655 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		32CC5C782AF2C7A50068F655 /* CameraType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraType.swift; sourceTree = "<group>"; };
 		32CC5C902AF2CFE00068F655 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -98,6 +131,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32CA850A2B03F959003BE8FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32CC5C922AF2D0490068F655 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -114,6 +154,7 @@
 				32CC5C902AF2CFE00068F655 /* .gitignore */,
 				32997E292ABB8B4E00F5BDD3 /* RenderService */,
 				32CC5C962AF2D0490068F655 /* LensDesigner */,
+				32CA850E2B03F959003BE8FB /* MeshBuilder */,
 				32997E282ABB8B4E00F5BDD3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +164,7 @@
 			children = (
 				32997E272ABB8B4E00F5BDD3 /* RenderService */,
 				32CC5C952AF2D0490068F655 /* LensDesigner.app */,
+				32CA850D2B03F959003BE8FB /* MeshBuilder.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,6 +234,55 @@
 			path = Shaders;
 			sourceTree = "<group>";
 		};
+		32CA850E2B03F959003BE8FB /* MeshBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				32CA850F2B03F959003BE8FB /* MeshBuilderApp.swift */,
+				32CA85112B03F959003BE8FB /* MeshBuilderDocument.swift */,
+				32CA85132B03F959003BE8FB /* ContentView.swift */,
+				32CA854D2B0994E0003BE8FB /* Render */,
+				32CA854B2B0994CD003BE8FB /* Geometry */,
+				32CA85472B07E2F2003BE8FB /* Camera.swift */,
+				32CA85152B03F95A003BE8FB /* Assets.xcassets */,
+				32CA851A2B03F95A003BE8FB /* Info.plist */,
+				32CA851B2B03F95A003BE8FB /* MeshBuilder.entitlements */,
+				32CA85552B09A4BF003BE8FB /* bridging.h */,
+				32CA85172B03F95A003BE8FB /* Preview Content */,
+			);
+			path = MeshBuilder;
+			sourceTree = "<group>";
+		};
+		32CA85172B03F95A003BE8FB /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				32CA85182B03F95A003BE8FB /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		32CA854B2B0994CD003BE8FB /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				32CA85452B07E286003BE8FB /* RenderScene.swift */,
+				32CA85492B098D8A003BE8FB /* Mesh.swift */,
+				32CA854E2B099502003BE8FB /* makeDefaultScene.swift */,
+				32CA85502B09950D003BE8FB /* Cube.swift */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
+		32CA854D2B0994E0003BE8FB /* Render */ = {
+			isa = PBXGroup;
+			children = (
+				32CA853F2B03FCF8003BE8FB /* RenderView.swift */,
+				32CA85412B03FF7A003BE8FB /* Renderer.swift */,
+				32CA85432B07DB9E003BE8FB /* RenderError.swift */,
+				32CA85522B09A0B7003BE8FB /* shaders.metal */,
+				32CA85542B09A444003BE8FB /* uniforms.h */,
+			);
+			path = Render;
+			sourceTree = "<group>";
+		};
 		32CC5C752AF2BDF70068F655 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +334,23 @@
 			productReference = 32997E272ABB8B4E00F5BDD3 /* RenderService */;
 			productType = "com.apple.product-type.tool";
 		};
+		32CA850C2B03F959003BE8FB /* MeshBuilder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32CA851C2B03F95A003BE8FB /* Build configuration list for PBXNativeTarget "MeshBuilder" */;
+			buildPhases = (
+				32CA85092B03F959003BE8FB /* Sources */,
+				32CA850A2B03F959003BE8FB /* Frameworks */,
+				32CA850B2B03F959003BE8FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeshBuilder;
+			productName = MeshBuilder;
+			productReference = 32CA850D2B03F959003BE8FB /* MeshBuilder.app */;
+			productType = "com.apple.product-type.application";
+		};
 		32CC5C942AF2D0490068F655 /* LensDesigner */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 32CC5CA42AF2D04A0068F655 /* Build configuration list for PBXNativeTarget "LensDesigner" */;
@@ -273,6 +381,9 @@
 					32997E262ABB8B4E00F5BDD3 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
+					32CA850C2B03F959003BE8FB = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
 					32CC5C942AF2D0490068F655 = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -293,11 +404,21 @@
 			targets = (
 				32997E262ABB8B4E00F5BDD3 /* RenderService */,
 				32CC5C942AF2D0490068F655 /* LensDesigner */,
+				32CA850C2B03F959003BE8FB /* MeshBuilder */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		32CA850B2B03F959003BE8FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CA85192B03F95A003BE8FB /* Preview Assets.xcassets in Resources */,
+				32CA85162B03F95A003BE8FB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32CC5C932AF2D0490068F655 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -334,6 +455,25 @@
 				32997E592ABE012700F5BDD3 /* camera.metal in Sources */,
 				32997E2B2ABB8B4E00F5BDD3 /* main.swift in Sources */,
 				32997E612ABE33FF00F5BDD3 /* sample.metal in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32CA85092B03F959003BE8FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32CA85462B07E286003BE8FB /* RenderScene.swift in Sources */,
+				32CA85512B09950D003BE8FB /* Cube.swift in Sources */,
+				32CA85102B03F959003BE8FB /* MeshBuilderApp.swift in Sources */,
+				32CA85122B03F959003BE8FB /* MeshBuilderDocument.swift in Sources */,
+				32CA85442B07DB9E003BE8FB /* RenderError.swift in Sources */,
+				32CA85482B07E2F2003BE8FB /* Camera.swift in Sources */,
+				32CA85402B03FCF8003BE8FB /* RenderView.swift in Sources */,
+				32CA854A2B098D8A003BE8FB /* Mesh.swift in Sources */,
+				32CA85532B09A0B7003BE8FB /* shaders.metal in Sources */,
+				32CA85422B03FF7A003BE8FB /* Renderer.swift in Sources */,
+				32CA854F2B099502003BE8FB /* makeDefaultScene.swift in Sources */,
+				32CA85142B03F959003BE8FB /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +550,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = RenderService/bridging.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -464,7 +603,6 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OBJC_BRIDGING_HEADER = RenderService/bridging.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -485,6 +623,60 @@
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = RenderService/bridging.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		32CA851D2B03F95A003BE8FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MeshBuilder/MeshBuilder.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MeshBuilder/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeshBuilder/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = thegail.MeshBuilder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = MeshBuilder/bridging.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		32CA851E2B03F95A003BE8FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MeshBuilder/MeshBuilder.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MeshBuilder/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeshBuilder/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = thegail.MeshBuilder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = MeshBuilder/bridging.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -558,6 +750,15 @@
 			buildConfigurations = (
 				32997E2F2ABB8B4E00F5BDD3 /* Debug */,
 				32997E302ABB8B4E00F5BDD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32CA851C2B03F95A003BE8FB /* Build configuration list for PBXNativeTarget "MeshBuilder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32CA851D2B03F95A003BE8FB /* Debug */,
+				32CA851E2B03F95A003BE8FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
